@@ -1,7 +1,7 @@
 import React from "react";
 import type { Lang } from "../../shared/index";
 import { useT } from "../i18n/useT";
-import { ILPMark } from "../components/ILPBrand";
+import { ILPLogo } from "../components/ILPBrand";
 
 export function Welcome(props: { onStart: () => void }): React.ReactElement {
   const { t, lang, setLang } = useT();
@@ -12,7 +12,7 @@ export function Welcome(props: { onStart: () => void }): React.ReactElement {
     <div className="screen">
       <div className="ilp-notice" role="note">
         <span className="ilp-notice__mark" aria-hidden="true">
-          <ILPMark size={40} />
+          <ILPLogo variant="light" wordless size="sm" />
         </span>
         <div>
           <strong>{t("ilp.notice.title")}</strong>
@@ -56,6 +56,15 @@ export function Welcome(props: { onStart: () => void }): React.ReactElement {
             >
               Español
               <span>ES</span>
+            </button>
+            <button
+              type="button"
+              className={`lang-card ${lang === "zh" ? "lang-card--on" : ""}`}
+              onClick={() => choose("zh")}
+              aria-pressed={lang === "zh"}
+            >
+              中文
+              <span>ZH</span>
             </button>
           </div>
           <button

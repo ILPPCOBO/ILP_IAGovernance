@@ -20,42 +20,42 @@ export const ILP_CONTACT = {
   webHref: "https://ilpabogados.com",
 } as const;
 
-/** The ILP monogram: navy tile, gold border, serif "ILP". */
-export function ILPMark(props: { size?: number }): React.ReactElement {
-  const size = props.size ?? 44;
+/**
+ * The ILP Abogados wordmark, recreated to scale (not a pasted image):
+ * a white rounded box with lowercase serif "ilp" + bold "ABOGADOS".
+ *
+ * variant "navy"  → for dark/navy backgrounds (white box, white word) — default
+ * variant "light" → for light backgrounds (navy box, navy word)
+ * stacked         → box above the word (used in the contact popup side panel)
+ * wordless        → just the "ilp" box
+ * size            → em-based scale: "sm" | "md" | "lg"
+ */
+export function ILPLogo(props: {
+  variant?: "navy" | "light";
+  stacked?: boolean;
+  wordless?: boolean;
+  size?: "sm" | "md" | "lg";
+}): React.ReactElement {
+  const variant = props.variant ?? "navy";
+  const cls = [
+    "ilp-logo",
+    `ilp-logo--${variant}`,
+    props.stacked ? "ilp-logo--stacked" : "",
+    props.size ? `ilp-logo--${props.size}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 48 48"
-      role="img"
-      aria-label="ILP Abogados"
-      focusable="false"
-    >
-      <rect
-        x="1.5"
-        y="1.5"
-        width="45"
-        height="45"
-        rx="9"
-        fill="#1a2340"
-        stroke="#c5a55a"
-        strokeWidth="1.6"
-      />
-      <text
-        x="24"
-        y="30.5"
-        textAnchor="middle"
-        fontFamily="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
-        fontSize="17"
-        fontWeight="600"
-        letterSpacing="1.5"
-        fill="#c5a55a"
-      >
-        ILP
-      </text>
-      <line x1="12" y1="37.5" x2="36" y2="37.5" stroke="#c5a55a" strokeWidth="1" opacity="0.7" />
-    </svg>
+    <span className={cls} role="img" aria-label="ILP Abogados">
+      <span className="ilp-logo__box" aria-hidden="true">
+        ilp
+      </span>
+      {!props.wordless && (
+        <span className="ilp-logo__word" aria-hidden="true">
+          ABOGADOS
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -131,8 +131,7 @@ export function ILPContactModal(props: {
         </button>
 
         <aside className="ilp-modal__side">
-          <ILPMark size={64} />
-          <div className="ilp-modal__firm">ILP Abogados</div>
+          <ILPLogo stacked size="lg" />
           <div className="ilp-modal__tagline">{t("ilp.tagline")}</div>
           <div className="ilp-modal__rule" />
           <div className="ilp-modal__side-note">Legal + Tech · Madrid</div>
@@ -197,7 +196,9 @@ export function ILPFloatButton(props: { onClick: () => void }): React.ReactEleme
       aria-label={t("ilp.float")}
       title={t("ilp.float")}
     >
-      <span className="ilp-float__mono">ILP</span>
+      <span className="ilp-logo__box ilp-logo__box--float" aria-hidden="true">
+        ilp
+      </span>
       <span className="ilp-float__label">{t("ilp.float")}</span>
     </button>
   );

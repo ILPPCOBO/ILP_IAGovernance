@@ -66,7 +66,11 @@ export interface PublicConfig {
   vendorWorkflow: VendorApprovalWorkflow;
   conversion: { heading: L; body: L };
   cta: { id: string; label: L }[];
-  translations: { en: Record<string, string>; es: Record<string, string> };
+  translations: {
+    en: Record<string, string>;
+    es: Record<string, string>;
+    zh?: Record<string, string>;
+  };
 }
 
 export class ApiError extends Error {

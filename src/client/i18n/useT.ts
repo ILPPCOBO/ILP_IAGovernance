@@ -14,6 +14,7 @@ import { t as sharedT } from "../../shared/index";
 export interface TranslationOverrides {
   en: Record<string, string>;
   es: Record<string, string>;
+  zh: Record<string, string>;
 }
 
 export interface LanguageContextValue {
@@ -48,7 +49,11 @@ export function useT(): UseT {
     lang,
     setLang,
     t: (key, vars) =>
-      sharedT(lang, key, vars, { en: overrides.en, es: overrides.es }),
+      sharedT(lang, key, vars, {
+        en: overrides.en,
+        es: overrides.es,
+        zh: overrides.zh,
+      }),
     tr: (value) => (value ? value[lang] ?? value.en : ""),
   };
 }

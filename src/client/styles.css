@@ -1637,3 +1637,88 @@ table.data tr:nth-child(even) td {
 .footer-ilp__contact a:hover {
   color: #fff;
 }
+
+/* =========================================================================
+   ILP wordmark (recreated to scale): white rounded box "ilp" + ABOGADOS.
+   ========================================================================= */
+
+.ilp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  font-size: 1rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.ilp-logo__box {
+  background: #ffffff;
+  color: var(--navy);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.7em;
+  line-height: 1;
+  padding: 0.1em 0.26em 0.22em;
+  border-radius: 0.16em;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+}
+.ilp-logo__word {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.02em;
+  letter-spacing: 0.09em;
+  color: #ffffff;
+}
+/* variant for light backgrounds */
+.ilp-logo--light .ilp-logo__box {
+  background: var(--navy);
+  color: #ffffff;
+}
+.ilp-logo--light .ilp-logo__word {
+  color: var(--navy);
+}
+/* sizes */
+.ilp-logo--sm {
+  font-size: 0.85rem;
+}
+.ilp-logo--lg {
+  font-size: 1.5rem;
+}
+/* stacked (popup side panel) */
+.ilp-logo--stacked {
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+/* header: logo | divider | title */
+.brand__divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(212, 186, 122, 0.55);
+  margin: 0 14px;
+  flex: 0 0 auto;
+}
+.brand .ilp-logo {
+  font-size: 1.05rem;
+}
+.brand__title {
+  font-weight: 500;
+}
+
+/* floating button mini-box */
+.ilp-logo__box--float {
+  background: #ffffff;
+  color: var(--navy);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0.08em 0.26em 0.2em;
+  border-radius: 0.16em;
+  text-transform: lowercase;
+}
+
+/* notice mark on white card */
+.ilp-notice__mark .ilp-logo__box {
+  font-size: 1.9em;
+}

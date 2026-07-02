@@ -7,7 +7,7 @@ import type {
   ScoringRule,
 } from "../types";
 
-const l = (en: string, es: string): L => ({ en, es });
+const l = (en: string, es: string, zh: string): L => ({ en, es, zh });
 
 /**
  * Default scoring rules. The readiness score rewards governance CONTROLS that
@@ -20,16 +20,16 @@ const l = (en: string, es: string): L => ({ en, es });
  * score, and never certifies legal compliance.
  */
 export const SCORING_RULES: ScoringRule[] = [
-  { category: "A", label: l("Governance roles & ownership", "Roles y responsabilidad de gobernanza"), max: 14 },
-  { category: "B", label: l("Current AI use (informational)", "Uso actual de IA (informativo)"), max: 0 },
-  { category: "C", label: l("Tool governance & review", "Gobernanza y revisión de herramientas"), max: 12 },
-  { category: "D", label: l("Data exposure (informational)", "Exposición de datos (informativo)"), max: 0 },
-  { category: "E", label: l("Human-review coverage", "Cobertura de revisión humana"), max: 16 },
-  { category: "F", label: l("Disclosure rules", "Reglas de divulgación"), max: 8 },
-  { category: "G", label: l("Incident-reporting process", "Proceso de reporte de incidentes"), max: 12 },
-  { category: "H", label: l("Vendor review", "Revisión de proveedores"), max: 12 },
-  { category: "I", label: l("AI literacy & training", "Alfabetización y formación en IA"), max: 14 },
-  { category: "J", label: l("Prohibited/restricted-use rules", "Reglas de uso prohibido/restringido"), max: 12 },
+  { category: "A", label: l("Governance roles & ownership", "Roles y responsabilidad de gobernanza", "治理角色与职责归属"), max: 14 },
+  { category: "B", label: l("Current AI use (informational)", "Uso actual de IA (informativo)", "当前人工智能使用情况（仅供参考）"), max: 0 },
+  { category: "C", label: l("Tool governance & review", "Gobernanza y revisión de herramientas", "工具治理与审查"), max: 12 },
+  { category: "D", label: l("Data exposure (informational)", "Exposición de datos (informativo)", "数据暴露情况（仅供参考）"), max: 0 },
+  { category: "E", label: l("Human-review coverage", "Cobertura de revisión humana", "人工审核覆盖范围"), max: 16 },
+  { category: "F", label: l("Disclosure rules", "Reglas de divulgación", "披露规则"), max: 8 },
+  { category: "G", label: l("Incident-reporting process", "Proceso de reporte de incidentes", "事件报告流程"), max: 12 },
+  { category: "H", label: l("Vendor review", "Revisión de proveedores", "供应商审查"), max: 12 },
+  { category: "I", label: l("AI literacy & training", "Alfabetización y formación en IA", "AI 素养与培训"), max: 14 },
+  { category: "J", label: l("Prohibited/restricted-use rules", "Reglas de uso prohibido/restringido", "禁止/限制使用规则"), max: 12 },
 ];
 
 /** Number of options available per multi-select question (denominators). */
@@ -55,10 +55,10 @@ function band(value: number): ReadinessBand {
 }
 
 export const BAND_LABEL: Record<ReadinessBand, L> = {
-  early: l("Early stage", "Etapa inicial"),
-  developing: l("Developing", "En desarrollo"),
-  structured: l("Structured", "Estructurada"),
-  mature: l("Mature", "Madura"),
+  early: l("Early stage", "Etapa inicial", "起步阶段"),
+  developing: l("Developing", "En desarrollo", "发展中"),
+  structured: l("Structured", "Estructurada", "结构化"),
+  mature: l("Mature", "Madura", "成熟"),
 };
 
 export function computeScore(
@@ -72,7 +72,11 @@ export function computeScore(
 
   for (const rule of rules) {
     let earned = 0;
-    let notes: L = l("Informational only — not scored.", "Solo informativo — no puntúa.");
+    let notes: L = l(
+      "Informational only — not scored.",
+      "Solo informativo — no puntúa.",
+      "仅供参考——不计入评分。",
+    );
 
     if (rule.max > 0) {
       switch (rule.category) {
@@ -82,6 +86,7 @@ export function computeScore(
           notes = l(
             `${roles.length} of ${DENOM.governanceRoles} governance roles present.`,
             `${roles.length} de ${DENOM.governanceRoles} roles de gobernanza presentes.`,
+            `已具备 ${roles.length}/${DENOM.governanceRoles} 个治理角色。`,
           );
           break;
         }
@@ -89,7 +94,11 @@ export function computeScore(
           const tools = resp.tools ?? [];
           if (tools.length === 0) {
             earned = rule.max;
-            notes = l("No specific tools recorded.", "No se registraron herramientas específicas.");
+            notes = l(
+              "No specific tools recorded.",
+              "No se registraron herramientas específicas.",
+              "未记录具体工具。",
+            );
           } else {
             const per = tools.map(
               (t) =>
@@ -103,6 +112,7 @@ export function computeScore(
             notes = l(
               `${reviewed} of ${tools.length} tools security-reviewed.`,
               `${reviewed} de ${tools.length} herramientas con revisión de seguridad.`,
+              `已对 ${reviewed}/${tools.length} 个工具完成安全审查。`,
             );
           }
           break;
@@ -123,6 +133,7 @@ export function computeScore(
             notes = l(
               `${selected.length} of ${denom} controls present.`,
               `${selected.length} de ${denom} controles presentes.`,
+              `已具备 ${selected.length}/${denom} 项控制措施。`,
             );
           }
         }
@@ -145,6 +156,7 @@ export function computeScore(
     summary: l(
       `AI governance readiness score: ${value}/100 (${BAND_LABEL[b].en.toLowerCase()}). This indicates how structured your internal AI governance is. It is not a measure of legal compliance.`,
       `Puntuación de preparación en gobernanza de IA: ${value}/100 (${BAND_LABEL[b].es.toLowerCase()}). Indica cómo de estructurada está su gobernanza interna de IA. No es una medida de cumplimiento legal.`,
+      `人工智能治理准备度评分：${value}/100（${BAND_LABEL[b].zh ?? BAND_LABEL[b].en}）。该评分反映贵公司内部人工智能治理的结构化程度，不构成对法律合规情况的衡量。`,
     ),
     breakdown,
   };

@@ -455,11 +455,11 @@ function TranslationsEditor(props: {
     filter ? k.toLowerCase().includes(filter.toLowerCase()) : true,
   );
 
-  const setVal = (lang: "en" | "es", key: string, value: string) => {
+  const setVal = (lang: "en" | "es" | "zh", key: string, value: string) => {
     patch({
       translations: {
         ...config.translations,
-        [lang]: { ...config.translations[lang], [key]: value },
+        [lang]: { ...(config.translations[lang] ?? {}), [key]: value },
       },
     });
   };
@@ -490,6 +490,13 @@ function TranslationsEditor(props: {
               <input
                 value={config.translations.es[key] ?? ""}
                 onChange={(e) => setVal("es", key, e.target.value)}
+              />
+            </label>
+            <label>
+              <span className="mini-label">ZH</span>
+              <input
+                value={config.translations.zh?.[key] ?? ""}
+                onChange={(e) => setVal("zh", key, e.target.value)}
               />
             </label>
           </div>

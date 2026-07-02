@@ -28,6 +28,6 @@ export function buildDefaultConfig(): AdminConfig {
     vendorWorkflow: structuredClone(VENDOR_WORKFLOW),
     cta: structuredClone(CTAS),
     conversion: { heading: { ...CONVERSION.heading }, body: { ...CONVERSION.body } },
-    translations: { en: { ...UI.en }, es: { ...UI.es } },
+    translations: { en: { ...UI.en }, es: { ...UI.es }, zh: { ...UI.zh } },
   };
 }

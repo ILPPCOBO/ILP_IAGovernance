@@ -23,37 +23,61 @@ export interface RenderedBlock {
 export type Section = "full" | "policy" | "tools" | "literacy" | "vendor" | "incident";
 
 const T = {
-  execSummary: { en: "Executive summary", es: "Resumen ejecutivo" },
-  score: { en: "AI governance readiness score", es: "Puntuación de preparación en gobernanza de IA" },
-  policy: { en: "Internal AI-use policy", es: "Política interna de uso de IA" },
-  tools: { en: "Approved-tools list", es: "Lista de herramientas aprobadas" },
-  sensitive: { en: "Sensitive-data rules", es: "Reglas sobre datos sensibles" },
-  humanReview: { en: "Human-review requirements", es: "Requisitos de revisión humana" },
-  disclosure: { en: "Employee disclosure rules", es: "Reglas de divulgación del uso de IA" },
-  incident: { en: "Incident-reporting process", es: "Proceso de reporte de incidentes" },
-  literacy: { en: "AI literacy checklist", es: "Checklist de alfabetización en IA" },
-  vendor: { en: "Vendor-approval workflow", es: "Flujo de aprobación de proveedores" },
-  missing: { en: "Missing information", es: "Información faltante" },
-  nextSteps: { en: "Recommended next steps", es: "Próximos pasos recomendados" },
-  conversion: { en: "Professional review", es: "Revisión profesional" },
-  disclaimer: { en: "Disclaimer", es: "Aviso legal" },
-  required: { en: "Required", es: "Obligatoria" },
-  recommended: { en: "Recommended", es: "Recomendada" },
-  findings: { en: "Key findings", es: "Hallazgos clave" },
-  whenRequired: { en: "When required", es: "Cuándo se requiere" },
-  intake: { en: "Intake fields", es: "Campos de admisión" },
-  steps: { en: "Review steps", es: "Pasos de revisión" },
-  roles: { en: "Approval roles", es: "Roles de aprobación" },
-  contractChecks: { en: "Contract checks", es: "Verificaciones contractuales" },
-  cadence: { en: "Review cadence", es: "Cadencia de revisión" },
-  whatCounts: { en: "What counts as an incident", es: "Qué cuenta como incidente" },
-  reportTo: { en: "Report to", es: "Reportar a" },
-  timeline: { en: "Timeline", es: "Plazo" },
-  include: { en: "Information to include", es: "Información a incluir" },
-  escalation: { en: "Escalation", es: "Escalado" },
-  containment: { en: "Containment", es: "Contención" },
-  documentation: { en: "Documentation", es: "Documentación" },
+  execSummary: { en: "Executive summary", es: "Resumen ejecutivo", zh: "执行摘要" },
+  score: { en: "AI governance readiness score", es: "Puntuación de preparación en gobernanza de IA", zh: "人工智能治理准备度评分" },
+  policy: { en: "Internal AI-use policy", es: "Política interna de uso de IA", zh: "内部人工智能使用政策" },
+  tools: { en: "Approved-tools list", es: "Lista de herramientas aprobadas", zh: "批准工具清单" },
+  sensitive: { en: "Sensitive-data rules", es: "Reglas sobre datos sensibles", zh: "敏感数据规则" },
+  humanReview: { en: "Human-review requirements", es: "Requisitos de revisión humana", zh: "人工审核要求" },
+  disclosure: { en: "Employee disclosure rules", es: "Reglas de divulgación del uso de IA", zh: "员工披露规则" },
+  incident: { en: "Incident-reporting process", es: "Proceso de reporte de incidentes", zh: "事件报告流程" },
+  literacy: { en: "AI literacy checklist", es: "Checklist de alfabetización en IA", zh: "AI 素养清单" },
+  vendor: { en: "Vendor-approval workflow", es: "Flujo de aprobación de proveedores", zh: "供应商审批流程" },
+  missing: { en: "Missing information", es: "Información faltante", zh: "缺失信息" },
+  nextSteps: { en: "Recommended next steps", es: "Próximos pasos recomendados", zh: "建议的后续步骤" },
+  conversion: { en: "Professional review", es: "Revisión profesional", zh: "专业审查" },
+  disclaimer: { en: "Disclaimer", es: "Aviso legal", zh: "免责声明" },
+  required: { en: "Required", es: "Obligatoria", zh: "必需" },
+  recommended: { en: "Recommended", es: "Recomendada", zh: "建议" },
+  findings: { en: "Key findings", es: "Hallazgos clave", zh: "主要发现" },
+  whenRequired: { en: "When required", es: "Cuándo se requiere", zh: "何时需要" },
+  intake: { en: "Intake fields", es: "Campos de admisión", zh: "登记信息" },
+  steps: { en: "Review steps", es: "Pasos de revisión", zh: "审查步骤" },
+  roles: { en: "Approval roles", es: "Roles de aprobación", zh: "审批角色" },
+  contractChecks: { en: "Contract checks", es: "Verificaciones contractuales", zh: "合同核查" },
+  cadence: { en: "Review cadence", es: "Cadencia de revisión", zh: "复审频率" },
+  whatCounts: { en: "What counts as an incident", es: "Qué cuenta como incidente", zh: "何种情况构成事件" },
+  reportTo: { en: "Report to", es: "Reportar a", zh: "报告对象" },
+  timeline: { en: "Timeline", es: "Plazo", zh: "时限" },
+  include: { en: "Information to include", es: "Información a incluir", zh: "应包含的信息" },
+  escalation: { en: "Escalation", es: "Escalado", zh: "升级处理" },
+  containment: { en: "Containment", es: "Contención", zh: "控制措施" },
+  documentation: { en: "Documentation", es: "Documentación", zh: "记录存档" },
 } as const;
+
+const TOOLS_HEADS: Record<Lang, string[]> = {
+  en: ["Tool", "Status", "Data allowed", "Data prohibited"],
+  es: ["Herramienta", "Estado", "Datos permitidos", "Datos prohibidos"],
+  zh: ["工具", "状态", "允许的数据", "禁止的数据"],
+};
+
+const HUMAN_REVIEW_HEADS: Record<Lang, string[]> = {
+  en: ["Context", "Requirement"],
+  es: ["Contexto", "Requisito"],
+  zh: ["场景", "要求"],
+};
+
+const DISCLOSURE_HEADS: Record<Lang, string[]> = {
+  en: ["Context", "Rule"],
+  es: ["Contexto", "Regla"],
+  zh: ["场景", "规则"],
+};
+
+const PRIORITY_SUFFIX: Record<Lang, string> = {
+  en: " (priority)",
+  es: " (prioridad)",
+  zh: "（优先）",
+};
 
 function policyBlocks(pkg: PolicyPackage, lang: Lang): RenderedBlock[] {
   const b: RenderedBlock[] = [{ type: "h2", text: tr(T.policy, lang) }];
@@ -65,9 +89,7 @@ function policyBlocks(pkg: PolicyPackage, lang: Lang): RenderedBlock[] {
 }
 
 function toolsBlocks(pkg: PolicyPackage, lang: Lang): RenderedBlock[] {
-  const head = lang === "es"
-    ? ["Herramienta", "Estado", "Datos permitidos", "Datos prohibidos"]
-    : ["Tool", "Status", "Data allowed", "Data prohibited"];
+  const head = TOOLS_HEADS[lang];
   return [
     { type: "h2", text: tr(T.tools, lang) },
     {
@@ -86,7 +108,7 @@ function toolsBlocks(pkg: PolicyPackage, lang: Lang): RenderedBlock[] {
 function literacyBlocks(pkg: PolicyPackage, lang: Lang): RenderedBlock[] {
   const b: RenderedBlock[] = [{ type: "h2", text: tr(T.literacy, lang) }];
   for (const it of pkg.aiLiteracy) {
-    const star = it.priority ? (lang === "es" ? " (prioridad)" : " (priority)") : "";
+    const star = it.priority ? PRIORITY_SUFFIX[lang] : "";
     b.push({ type: "li", text: `${tr(it.text, lang)}${star}` });
   }
   return b;
@@ -166,14 +188,14 @@ export function renderBlocks(pkg: PolicyPackage, lang: Lang, section: Section = 
   blocks.push({ type: "h2", text: tr(T.humanReview, lang) });
   blocks.push({
     type: "table",
-    head: lang === "es" ? ["Contexto", "Requisito"] : ["Context", "Requirement"],
+    head: HUMAN_REVIEW_HEADS[lang],
     rows: pkg.humanReview.map((r) => [tr(r.context, lang), `${r.required ? tr(T.required, lang) : tr(T.recommended, lang)} — ${tr(r.requirement, lang)}`]),
   });
 
   blocks.push({ type: "h2", text: tr(T.disclosure, lang) });
   blocks.push({
     type: "table",
-    head: lang === "es" ? ["Contexto", "Regla"] : ["Context", "Rule"],
+    head: DISCLOSURE_HEADS[lang],
     rows: pkg.disclosureRules.map((r) => [tr(r.context, lang), `${r.required ? tr(T.required, lang) : tr(T.recommended, lang)} — ${tr(r.rule, lang)}`]),
   });
 

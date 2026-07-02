@@ -27,7 +27,7 @@ import {
   ILP_CONTACT,
   ILPContactModal,
   ILPFloatButton,
-  ILPMark,
+  ILPLogo,
 } from "./components/ILPBrand";
 import { Welcome } from "./screens/Welcome";
 import { Disclaimer } from "./screens/Disclaimer";
@@ -40,7 +40,7 @@ import { Export } from "./screens/Export";
 import { Contact } from "./screens/Contact";
 import { Admin } from "./screens/Admin";
 
-const EMPTY_OVERRIDES: TranslationOverrides = { en: {}, es: {} };
+const EMPTY_OVERRIDES: TranslationOverrides = { en: {}, es: {}, zh: {} };
 
 export default function App(): React.ReactElement {
   const [lang, setLangState] = useState<Lang>("en");
@@ -69,6 +69,7 @@ export default function App(): React.ReactElement {
         setOverrides({
           en: cfg.translations?.en ?? {},
           es: cfg.translations?.es ?? {},
+          zh: cfg.translations?.zh ?? {},
         });
         if (session.language?.lang) setLangState(session.language.lang);
       } catch {
@@ -122,6 +123,7 @@ export default function App(): React.ReactElement {
           setOverrides({
             en: cfg.translations?.en ?? {},
             es: cfg.translations?.es ?? {},
+            zh: cfg.translations?.zh ?? {},
           });
         }}
       />
@@ -283,14 +285,11 @@ function Shell(props: {
       <header className="site-header">
         <div className="container">
           <button className="brand" onClick={() => setScreen("welcome")}>
-            <span className="brand__mark brand__mark--ilp">
-              <ILPMark size={44} />
-            </span>
+            <ILPLogo />
+            <span className="brand__divider" aria-hidden="true" />
             <span className="brand__text">
               <span className="brand__title">{t("app.title")}</span>
-              <span className="brand__tag">
-                {t("ilp.by")} · {t("ilp.tagline")}
-              </span>
+              <span className="brand__tag">{t("ilp.tagline")}</span>
             </span>
           </button>
           <span className="header-spacer" />
@@ -310,6 +309,12 @@ function Shell(props: {
               onClick={() => setLang("es")}
             >
               {t("lang.es")}
+            </button>
+            <button
+              aria-pressed={lang === "zh"}
+              onClick={() => setLang("zh")}
+            >
+              {t("lang.zh")}
             </button>
           </div>
         </div>
@@ -399,9 +404,8 @@ function Shell(props: {
         <div className="container">
           <div className="footer-ilp">
             <div className="footer-ilp__brand">
-              <ILPMark size={40} />
               <div>
-                <strong>{ILP_CONTACT.name}</strong>
+                <ILPLogo size="sm" />
                 <div className="footer-ilp__tagline">{t("ilp.tagline")}</div>
               </div>
             </div>

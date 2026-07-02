@@ -24,6 +24,10 @@ export const CORE_DISCLAIMER = {
     "final de cumplimiento y no crea una relación abogado-cliente. La política de " +
     "IA de su empresa debe ser revisada y adaptada por profesionales cualificados " +
     "antes de su implementación.",
+  zh:
+    "本工具生成的人工智能治理材料为初步草案，仅供参考。其不构成法律意见，" +
+    "不属于最终合规审查，也不建立律师与委托人关系。贵公司的人工智能政策在" +
+    "实施之前，应由合格的专业人士进行审查和调整。",
 };
 
 type Dict = Record<string, string>;
@@ -47,6 +51,7 @@ const en: Dict = {
   "lang.toggle": "Language",
   "lang.en": "English",
   "lang.es": "Español",
+  "lang.zh": "中文",
 
   "welcome.heading": "Build a preliminary AI governance policy for your company",
   "welcome.body":
@@ -185,6 +190,7 @@ const en: Dict = {
   "admin.leads.none": "No leads yet.",
   "admin.en": "English",
   "admin.es": "Español",
+  "admin.zh": "中文",
 
   "common.loading": "Loading…",
   "common.error": "Something went wrong.",
@@ -230,6 +236,7 @@ const es: Dict = {
   "lang.toggle": "Idioma",
   "lang.en": "English",
   "lang.es": "Español",
+  "lang.zh": "中文",
 
   "welcome.heading": "Cree una política preliminar de gobernanza de IA para su empresa",
   "welcome.body":
@@ -368,6 +375,7 @@ const es: Dict = {
   "admin.leads.none": "Aún no hay leads.",
   "admin.en": "English",
   "admin.es": "Español",
+  "admin.zh": "中文",
 
   "common.loading": "Cargando…",
   "common.error": "Algo salió mal.",
@@ -394,22 +402,208 @@ const es: Dict = {
   "ilp.float": "Contactar con ILP Abogados",
 };
 
-export const UI: Record<Lang, Dict> = { en, es };
+const zh: Dict = {
+  "app.title": "人工智能治理政策生成器",
+  "app.tagline": "为使用人工智能的企业（而不仅是人工智能公司）提供初步治理方案。",
+  "app.langName": "中文",
+
+  "nav.welcome": "欢迎",
+  "nav.disclaimer": "免责声明",
+  "nav.questionnaire": "问卷",
+  "nav.summary": "成熟度概览",
+  "nav.package": "政策包",
+  "nav.literacy": "AI 素养",
+  "nav.vendor": "供应商审批",
+  "nav.export": "导出中心",
+  "nav.contact": "联系我们",
+  "nav.admin": "管理",
+
+  "lang.toggle": "语言",
+  "lang.en": "English",
+  "lang.es": "Español",
+  "lang.zh": "中文",
+
+  "welcome.heading": "为贵公司创建初步的人工智能治理政策",
+  "welcome.body":
+    "回答关于团队如何使用生成式人工智能的结构化问题，即可获得一套内部治理初稿：人工智能使用政策、批准工具清单、敏感数据规则、人工审核要求、披露规则、事件报告流程、AI 素养清单以及供应商审批流程。",
+  "welcome.start": "开始使用",
+  "welcome.chooseLang": "请选择语言",
+  "welcome.notLegal": "初步草案——不构成法律意见。",
+
+  "disclaimer.heading": "开始之前",
+  "disclaimer.accept": "我已阅读并接受本免责声明",
+  "disclaimer.continue": "接受并继续",
+  "disclaimer.mustAccept": "在生成政策之前，您必须先接受免责声明。",
+
+  "q.progress": "第 {n} 步，共 {total} 步",
+  "q.next": "下一步",
+  "q.back": "上一步",
+  "q.generate": "生成政策包",
+  "q.other": "其他（请注明）",
+  "q.yes": "是",
+  "q.no": "否",
+  "q.unknown": "不确定",
+  "q.selectAll": "请选择所有适用项",
+  "q.tool.add": "配置工具",
+  "q.tool.status": "状态",
+  "q.tool.plan": "版本",
+  "q.tool.account": "账户",
+  "q.tool.trains": "数据是否用于模型训练？",
+  "q.tool.terms": "是否已审查合同条款？",
+  "q.tool.security": "是否已完成安全/隐私审查？",
+  "status.approved": "已批准",
+  "status.tolerated": "默许使用",
+  "status.prohibited": "已禁止",
+  "status.unknown": "不确定",
+  "plan.free": "免费版",
+  "plan.enterprise": "企业版",
+  "plan.mixed": "混合",
+  "account.company": "公司账户",
+  "account.personal": "个人账户",
+  "account.mixed": "混合",
+
+  "summary.heading": "人工智能治理准备度",
+  "summary.scoreLabel": "人工智能治理准备度评分",
+  "summary.notCompliance": "这是准备度指标，不是合规评分，不证明符合任何法律要求。",
+  "summary.breakdown": "评分明细",
+  "summary.findings": "主要发现",
+  "summary.viewPackage": "查看完整政策包",
+
+  "package.title": "初步人工智能治理政策方案包",
+  "package.execSummary": "执行摘要",
+  "package.score": "人工智能治理准备度评分",
+  "package.policy": "内部人工智能使用政策",
+  "package.tools": "批准工具清单",
+  "package.sensitive": "敏感数据规则",
+  "package.humanReview": "人工审核要求",
+  "package.disclosure": "员工披露规则",
+  "package.incident": "事件报告流程",
+  "package.literacy": "AI 素养清单",
+  "package.vendor": "供应商审批流程",
+  "package.missing": "缺失信息",
+  "package.nextSteps": "建议的后续步骤",
+  "package.conversion": "专业审查服务",
+  "package.edit": "编辑",
+  "package.save": "保存",
+  "package.cancel": "取消",
+  "package.required": "须经人工审核",
+  "package.notRequired": "建议审核",
+  "package.colContext": "场景",
+  "package.colRequirement": "要求",
+  "package.colRule": "规则",
+  "package.colTool": "工具",
+  "package.colStatus": "状态",
+  "package.colPermitted": "允许用途",
+  "package.colRestricted": "受限用途",
+  "package.colDataAllowed": "允许的数据",
+  "package.colDataProhibited": "禁止的数据",
+  "package.colOwner": "负责人",
+  "package.colReview": "复审日期",
+
+  "export.heading": "导出中心",
+  "export.body": "下载您的初步方案包。文件均为草稿，供专业人士审查。",
+  "export.full": "完整政策包",
+  "export.policyOnly": "仅内部人工智能使用政策",
+  "export.tools": "批准工具清单",
+  "export.literacy": "AI 素养清单",
+  "export.vendor": "供应商审批流程",
+  "export.incident": "事件报告流程",
+  "export.pdf": "PDF",
+  "export.docx": "DOCX",
+  "export.json": "JSON",
+  "export.pdfFallback": "PDF 导出将打开可打印视图——请使用浏览器的“另存为 PDF”功能。",
+
+  "conversion.request": "申请政策审查",
+  "conversion.book": "预约人工智能治理咨询",
+  "conversion.training": "获取员工 AI 培训方案",
+
+  "contact.heading": "让专业团队为贵公司审查并调整这份政策",
+  "contact.name": "姓名",
+  "contact.company": "公司",
+  "contact.email": "电子邮箱",
+  "contact.country": "国家",
+  "contact.industry": "行业",
+  "contact.employees": "员工人数",
+  "contact.tools": "目前使用的 AI 工具",
+  "contact.urgency": "紧急程度",
+  "contact.message": "留言",
+  "contact.upload": "上传现有政策",
+  "contact.submit": "发送请求",
+  "contact.sent": "谢谢——我们已收到您的请求，会尽快与您联系。",
+  "contact.urgency.low": "低",
+  "contact.urgency.medium": "中",
+  "contact.urgency.high": "高",
+
+  "upload.heading": "上传现有文件（可选）",
+  "upload.body":
+    "可上传现有的 AI/IT/可接受使用政策、供应商清单或培训材料。支持：PDF、DOCX、TXT、PNG、JPG、JPEG。上传的文件仅用于参考初稿内容，绝不会被视为最终法律意见。",
+  "upload.choose": "选择文件",
+  "upload.weak": "此文件的文本提取有限，仅作为背景参考。",
+  "upload.uploaded": "已上传",
+
+  "admin.heading": "管理",
+  "admin.tab.questions": "问题",
+  "admin.tab.templates": "模板",
+  "admin.tab.scoring": "评分",
+  "admin.tab.literacy": "AI 素养",
+  "admin.tab.vendor": "供应商流程",
+  "admin.tab.disclaimer": "免责声明",
+  "admin.tab.cta": "CTA 与转化",
+  "admin.tab.translations": "翻译",
+  "admin.tab.leads": "潜在客户",
+  "admin.save": "保存更改",
+  "admin.saved": "已保存。",
+  "admin.reset": "恢复默认值",
+  "admin.exportJson": "导出 JSON",
+  "admin.token": "管理员令牌",
+  "admin.login": "解锁管理",
+  "admin.badToken": "管理员令牌无效。",
+  "admin.leads.none": "暂无潜在客户。",
+  "admin.en": "English",
+  "admin.es": "Español",
+  "admin.zh": "中文",
+
+  "common.loading": "加载中…",
+  "common.error": "出了点问题。",
+  "common.optional": "可选",
+  "common.disclaimerShort": "初步草案——使用前请交由合格的专业人士审查。",
+
+  "ilp.name": "ILP Abogados 律师事务所",
+  "ilp.by": "由 ILP Abogados 提供",
+  "ilp.tagline": "洞悉您业务的智慧",
+  "ilp.notice.title": "ILP Abogados 提供的免费工具——不能替代法律服务",
+  "ilp.notice.body":
+    "本工具可在几分钟内为您生成一份实用的人工智能治理政策初稿。它不能替代法律服务或专业意见。初稿完成后，ILP Abogados 团队可以为您审查，并根据贵公司及所在司法辖区进行调整，同时为您的团队提供培训。",
+  "ilp.modal.eyebrow": "ILP Abogados · 法律 + 科技",
+  "ilp.modal.title": "您的初稿已完成。现在让它更加牢靠。",
+  "ilp.modal.body":
+    "您已获得一份初步的人工智能治理方案包——这是一个很好的起点，但不构成法律意见。ILP Abogados 将法律专业与科技相结合，把这样的初稿打磨成贵公司真正可以信赖的政策：经过审查、契合您的司法辖区和行业，并配套员工培训予以落地。",
+  "ilp.modal.review": "申请专业审查",
+  "ilp.modal.call": "致电我们",
+  "ilp.modal.email": "给我们写信",
+  "ilp.modal.web": "访问 ilpabogados.com",
+  "ilp.modal.later": "以后再说",
+  "ilp.modal.fineprint": "本工具不能替代法律服务，也不建立律师与委托人关系。",
+  "ilp.float": "联系 ILP Abogados",
+};
+
+export const UI: Record<Lang, Dict> = { en, es, zh };
 
 /** All UI keys (used by the admin translations editor). */
 export const UI_KEYS = Object.keys(en);
 
 /**
  * Resolve a UI string. `overrides` lets the admin area shadow defaults.
- * Supports simple {placeholder} interpolation.
+ * Supports simple {placeholder} interpolation. A key missing from a language
+ * falls back to English so nothing renders blank.
  */
 export function t(
   lang: Lang,
   key: string,
   vars?: Record<string, string | number>,
-  overrides?: Record<Lang, Dict>,
+  overrides?: Partial<Record<Lang, Dict>>,
 ): string {
-  const base = UI[lang][key];
+  const base = UI[lang][key] ?? UI.en[key];
   const override = overrides?.[lang]?.[key];
   let str = override ?? base ?? key;
   if (vars) {

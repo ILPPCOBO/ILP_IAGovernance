@@ -6,12 +6,17 @@
  * the same package can be rendered in either language at view/export time.
  */
 
-export type Lang = "en" | "es";
+export type Lang = "en" | "es" | "zh";
 
-/** A bilingual string. Every piece of generated/displayed text is an `L`. */
+/**
+ * A multilingual string. Every piece of generated/displayed text is an `L`.
+ * `zh` is optional: renderers fall back to `en` when a Chinese translation is
+ * missing, so content can never render blank.
+ */
 export interface L {
   en: string;
   es: string;
+  zh?: string;
 }
 
 export type Severity = "low" | "medium" | "high";
@@ -335,6 +340,7 @@ export interface ScoringRule {
 export interface AdminTranslation {
   en: Record<string, string>;
   es: Record<string, string>;
+  zh?: Record<string, string>;
 }
 
 /** The full editable configuration the admin area can mutate. */
