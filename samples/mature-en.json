@@ -1,0 +1,1207 @@
+{
+  "id": "pkg_sample-mature_20260625095946",
+  "sessionId": "sample-mature",
+  "createdAt": "2026-06-25T09:59:46.842Z",
+  "disclaimerVersion": "2026-06",
+  "companyName": "Northwind Analytics",
+  "title": {
+    "en": "Preliminary AI Governance Policy Package",
+    "es": "Paquete preliminar de política de gobernanza de IA"
+  },
+  "executiveSummary": {
+    "en": "This is a preliminary AI governance package for Northwind Analytics. Its AI governance readiness score is 91/100 (mature). It identifies 1 finding(s), including 0 high-priority item(s), and provides draft policies, controls and workflows. It is not legal advice and is not a final compliance review; it should be reviewed and adapted by qualified professionals before implementation.",
+    "es": "Este es un paquete preliminar de gobernanza de IA para Northwind Analytics. Su puntuación de preparación en gobernanza de IA es 91/100 (madura). Identifica 1 hallazgo(s), incluidos 0 de alta prioridad, y ofrece políticas, controles y flujos en borrador. No constituye asesoramiento jurídico ni una revisión final de cumplimiento; debe ser revisado y adaptado por profesionales cualificados antes de su implementación."
+  },
+  "score": {
+    "value": 91,
+    "band": "mature",
+    "bandLabel": {
+      "en": "Mature",
+      "es": "Madura"
+    },
+    "summary": {
+      "en": "AI governance readiness score: 91/100 (mature). This indicates how structured your internal AI governance is. It is not a measure of legal compliance.",
+      "es": "Puntuación de preparación en gobernanza de IA: 91/100 (madura). Indica cómo de estructurada está su gobernanza interna de IA. No es una medida de cumplimiento legal."
+    },
+    "breakdown": [
+      {
+        "category": "A",
+        "label": {
+          "en": "Governance roles & ownership",
+          "es": "Roles y responsabilidad de gobernanza"
+        },
+        "earned": 14,
+        "max": 14,
+        "notes": {
+          "en": "5 of 5 governance roles present.",
+          "es": "5 de 5 roles de gobernanza presentes."
+        }
+      },
+      {
+        "category": "B",
+        "label": {
+          "en": "Current AI use (informational)",
+          "es": "Uso actual de IA (informativo)"
+        },
+        "earned": 0,
+        "max": 0,
+        "notes": {
+          "en": "Informational only — not scored.",
+          "es": "Solo informativo — no puntúa."
+        }
+      },
+      {
+        "category": "C",
+        "label": {
+          "en": "Tool governance & review",
+          "es": "Gobernanza y revisión de herramientas"
+        },
+        "earned": 11,
+        "max": 12,
+        "notes": {
+          "en": "2 of 3 tools security-reviewed.",
+          "es": "2 de 3 herramientas con revisión de seguridad."
+        }
+      },
+      {
+        "category": "D",
+        "label": {
+          "en": "Data exposure (informational)",
+          "es": "Exposición de datos (informativo)"
+        },
+        "earned": 0,
+        "max": 0,
+        "notes": {
+          "en": "Informational only — not scored.",
+          "es": "Solo informativo — no puntúa."
+        }
+      },
+      {
+        "category": "E",
+        "label": {
+          "en": "Human-review coverage",
+          "es": "Cobertura de revisión humana"
+        },
+        "earned": 16,
+        "max": 16,
+        "notes": {
+          "en": "8 of 8 controls present.",
+          "es": "8 de 8 controles presentes."
+        }
+      },
+      {
+        "category": "F",
+        "label": {
+          "en": "Disclosure rules",
+          "es": "Reglas de divulgación"
+        },
+        "earned": 7,
+        "max": 8,
+        "notes": {
+          "en": "5 of 6 controls present.",
+          "es": "5 de 6 controles presentes."
+        }
+      },
+      {
+        "category": "G",
+        "label": {
+          "en": "Incident-reporting process",
+          "es": "Proceso de reporte de incidentes"
+        },
+        "earned": 9,
+        "max": 12,
+        "notes": {
+          "en": "7 of 9 controls present.",
+          "es": "7 de 9 controles presentes."
+        }
+      },
+      {
+        "category": "H",
+        "label": {
+          "en": "Vendor review",
+          "es": "Revisión de proveedores"
+        },
+        "earned": 10,
+        "max": 12,
+        "notes": {
+          "en": "9 of 11 controls present.",
+          "es": "9 de 11 controles presentes."
+        }
+      },
+      {
+        "category": "I",
+        "label": {
+          "en": "AI literacy & training",
+          "es": "Alfabetización y formación en IA"
+        },
+        "earned": 13,
+        "max": 14,
+        "notes": {
+          "en": "11 of 12 controls present.",
+          "es": "11 de 12 controles presentes."
+        }
+      },
+      {
+        "category": "J",
+        "label": {
+          "en": "Prohibited/restricted-use rules",
+          "es": "Reglas de uso prohibido/restringido"
+        },
+        "earned": 11,
+        "max": 12,
+        "notes": {
+          "en": "9 of 10 controls present.",
+          "es": "9 de 10 controles presentes."
+        }
+      }
+    ]
+  },
+  "policy": [
+    {
+      "id": "purposeScope",
+      "title": {
+        "en": "Purpose and scope",
+        "es": "Propósito y alcance"
+      },
+      "clauses": [
+        {
+          "id": "purposeScope.base",
+          "text": {
+            "en": "This policy sets out how employees and contractors may use generative AI tools at Northwind Analytics. It is a preliminary, internal draft and should be reviewed and adapted by qualified professionals before implementation.",
+            "es": "Esta política establece cómo los empleados y contratistas pueden usar herramientas de IA generativa en Northwind Analytics. Es un borrador interno preliminar y debe ser revisado y adaptado por profesionales cualificados antes de su implementación."
+          }
+        }
+      ]
+    },
+    {
+      "id": "applies",
+      "title": {
+        "en": "Who the policy applies to",
+        "es": "A quién se aplica la política"
+      },
+      "clauses": [
+        {
+          "id": "applies.base",
+          "text": {
+            "en": "This policy applies to all employees, contractors, interns and third parties who use AI tools on behalf of Northwind Analytics or with company data.",
+            "es": "Esta política se aplica a todos los empleados, contratistas, becarios y terceros que usen herramientas de IA en nombre de Northwind Analytics o con datos de la empresa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "approvedTools",
+      "title": {
+        "en": "Approved AI tools",
+        "es": "Herramientas de IA aprobadas"
+      },
+      "clauses": [
+        {
+          "id": "approvedTools.base",
+          "text": {
+            "en": "Only AI tools that appear on the company's approved-tools list, with the status and conditions stated there, may be used for company work.",
+            "es": "Solo pueden usarse para el trabajo de la empresa las herramientas de IA que figuren en la lista de herramientas aprobadas, con el estado y las condiciones allí indicados."
+          }
+        }
+      ]
+    },
+    {
+      "id": "permittedUses",
+      "title": {
+        "en": "Permitted uses",
+        "es": "Usos permitidos"
+      },
+      "clauses": [
+        {
+          "id": "permittedUses.base",
+          "text": {
+            "en": "Subject to the rules below, employees may use approved AI tools for low-risk productivity tasks such as drafting, summarizing, brainstorming and reformatting non-sensitive content.",
+            "es": "Sujeto a las reglas siguientes, los empleados pueden usar herramientas de IA aprobadas para tareas de productividad de bajo riesgo como redactar, resumir, generar ideas y reformatear contenido no sensible."
+          }
+        }
+      ]
+    },
+    {
+      "id": "restrictedUses",
+      "title": {
+        "en": "Restricted uses",
+        "es": "Usos restringidos"
+      },
+      "clauses": [
+        {
+          "id": "restrictedUses.base",
+          "text": {
+            "en": "Higher-risk uses are permitted only with the controls in this policy: human review, no sensitive data, and disclosure where required.",
+            "es": "Los usos de mayor riesgo solo se permiten con los controles de esta política: revisión humana, sin datos sensibles y divulgación cuando se requiera."
+          }
+        },
+        {
+          "id": "restrictedUses.code",
+          "text": {
+            "en": "AI coding tools may be used for non-confidential code, but generated code must be reviewed before deployment and must not include secrets or proprietary source unless the tool is approved for that purpose.",
+            "es": "Las herramientas de IA para programación pueden usarse con código no confidencial, pero el código generado debe revisarse antes del despliegue y no debe incluir secretos ni código propietario salvo que la herramienta esté aprobada para ello."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prohibitedUses",
+      "title": {
+        "en": "Prohibited uses",
+        "es": "Usos prohibidos"
+      },
+      "clauses": [
+        {
+          "id": "prohibitedUses.base",
+          "text": {
+            "en": "The following are prohibited: entering credentials, passwords, API keys or secrets into AI tools; using AI to produce deceptive content, impersonation or deepfakes; and presenting AI output as final professional advice without review.",
+            "es": "Queda prohibido: introducir credenciales, contraseñas, claves API o secretos en herramientas de IA; usar IA para producir contenido engañoso, suplantación o deepfakes; y presentar resultados de IA como asesoramiento profesional final sin revisión."
+          }
+        },
+        {
+          "id": "prohibitedUses.confidentialPublic",
+          "text": {
+            "en": "Uploading confidential, client, personal or trade-secret data to public/free AI tools is prohibited unless an approved, enterprise-grade tool with suitable contractual terms is used.",
+            "es": "Está prohibido subir datos confidenciales, de clientes, personales o secretos comerciales a herramientas de IA públicas/gratuitas, salvo que se use una herramienta empresarial aprobada con términos contractuales adecuados."
+          }
+        },
+        {
+          "id": "prohibitedUses.finalDecisions",
+          "text": {
+            "en": "AI must not be used to make final legal, medical, financial, HR or compliance decisions without qualified human judgment.",
+            "es": "La IA no debe usarse para tomar decisiones finales legales, médicas, financieras, de RR. HH. o de cumplimiento sin juicio humano cualificado."
+          }
+        },
+        {
+          "id": "prohibitedUses.automatedHiring",
+          "text": {
+            "en": "Fully automated hiring decisions and employee surveillance/scoring using AI are prohibited without explicit approval, a documented lawful basis and human oversight.",
+            "es": "Quedan prohibidas las decisiones de contratación totalmente automatizadas y la vigilancia/puntuación de empleados mediante IA sin aprobación explícita, base legal documentada y supervisión humana."
+          }
+        }
+      ]
+    },
+    {
+      "id": "sensitiveData",
+      "title": {
+        "en": "Sensitive-data rules",
+        "es": "Reglas sobre datos sensibles"
+      },
+      "clauses": [
+        {
+          "id": "sensitiveData.base",
+          "text": {
+            "en": "Do not enter sensitive data into AI tools unless the specific tool is approved for that data type. Sensitive data includes personal data, client data, confidential information, trade secrets, source code, contracts, legal/privileged material, financial data and regulated data.",
+            "es": "No introduzca datos sensibles en herramientas de IA salvo que la herramienta concreta esté aprobada para ese tipo de dato. Los datos sensibles incluyen datos personales, datos de clientes, información confidencial, secretos comerciales, código fuente, contratos, material legal/privilegiado, datos financieros y datos regulados."
+          }
+        }
+      ]
+    },
+    {
+      "id": "confidentiality",
+      "title": {
+        "en": "Confidentiality rules",
+        "es": "Reglas de confidencialidad"
+      },
+      "clauses": [
+        {
+          "id": "confidentiality.base",
+          "text": {
+            "en": "Treat anything entered into an AI tool as potentially disclosed outside the company. Do not enter information you would not be comfortable sharing with an external third party absent appropriate contractual protection.",
+            "es": "Considere que todo lo que introduce en una herramienta de IA puede divulgarse fuera de la empresa. No introduzca información que no compartiría con un tercero externo sin la protección contractual adecuada."
+          }
+        }
+      ]
+    },
+    {
+      "id": "personalData",
+      "title": {
+        "en": "Personal-data rules",
+        "es": "Reglas sobre datos personales"
+      },
+      "clauses": [
+        {
+          "id": "personalData.base",
+          "text": {
+            "en": "Personal data may only be processed with AI where there is a lawful basis, data-minimization is applied and the tool's terms permit such processing. When in doubt, consult the DPO or legal team.",
+            "es": "Los datos personales solo pueden tratarse con IA cuando exista una base legal, se aplique la minimización de datos y los términos de la herramienta permitan dicho tratamiento. En caso de duda, consulte al DPO o al equipo jurídico."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ipOutput",
+      "title": {
+        "en": "IP and output-use rules",
+        "es": "Reglas de PI y uso de resultados"
+      },
+      "clauses": [
+        {
+          "id": "ipOutput.base",
+          "text": {
+            "en": "AI outputs may carry intellectual-property and accuracy risks. Verify originality and rights before publishing or relying on AI-generated content, and do not assume ownership of generated material.",
+            "es": "Los resultados de IA pueden conllevar riesgos de propiedad intelectual y exactitud. Verifique la originalidad y los derechos antes de publicar o confiar en contenido generado por IA, y no asuma la titularidad del material generado."
+          }
+        }
+      ]
+    },
+    {
+      "id": "humanReview",
+      "title": {
+        "en": "Human-review requirements",
+        "es": "Requisitos de revisión humana"
+      },
+      "clauses": [
+        {
+          "id": "humanReview.base",
+          "text": {
+            "en": "A qualified person must review AI output before it is used in any external, legal, financial, employment, regulated or high-impact context. AI assists; humans remain accountable.",
+            "es": "Una persona cualificada debe revisar los resultados de IA antes de usarlos en cualquier contexto externo, legal, financiero, laboral, regulado o de alto impacto. La IA asiste; las personas siguen siendo responsables."
+          }
+        }
+      ]
+    },
+    {
+      "id": "disclosure",
+      "title": {
+        "en": "Disclosure requirements",
+        "es": "Requisitos de divulgación"
+      },
+      "clauses": [
+        {
+          "id": "disclosure.base",
+          "text": {
+            "en": "Disclose AI use where it affects others' understanding or decisions: in public-facing content, when generating synthetic media, and when AI materially informs a decision affecting a client, employee or the public.",
+            "es": "Divulgue el uso de IA cuando afecte la comprensión o las decisiones de terceros: en contenido público, al generar contenido sintético y cuando la IA influya materialmente en una decisión que afecte a un cliente, empleado o al público."
+          }
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": {
+        "en": "Security requirements",
+        "es": "Requisitos de seguridad"
+      },
+      "clauses": [
+        {
+          "id": "security.base",
+          "text": {
+            "en": "Use company-managed accounts and approved tools, keep software updated, never share login credentials, and report suspected data exposure immediately.",
+            "es": "Use cuentas gestionadas por la empresa y herramientas aprobadas, mantenga el software actualizado, nunca comparta credenciales y reporte de inmediato cualquier posible exposición de datos."
+          }
+        },
+        {
+          "id": "security.noReview",
+          "text": {
+            "en": "Tools that have not undergone a security/privacy review must not be used with any company or personal data until that review is completed.",
+            "es": "Las herramientas que no hayan pasado una revisión de seguridad/privacidad no deben usarse con datos de la empresa o personales hasta que se complete dicha revisión."
+          }
+        }
+      ]
+    },
+    {
+      "id": "vendorApproval",
+      "title": {
+        "en": "Vendor approval process",
+        "es": "Proceso de aprobación de proveedores"
+      },
+      "clauses": [
+        {
+          "id": "vendorApproval.base",
+          "text": {
+            "en": "New AI tools and vendors must be approved before use through the vendor-approval workflow, which reviews data processing, training on data, security, retention and contractual terms.",
+            "es": "Las nuevas herramientas y proveedores de IA deben aprobarse antes de su uso mediante el flujo de aprobación de proveedores, que revisa el tratamiento de datos, el entrenamiento con datos, la seguridad, la retención y los términos contractuales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "incident",
+      "title": {
+        "en": "Incident reporting process",
+        "es": "Proceso de reporte de incidentes"
+      },
+      "clauses": [
+        {
+          "id": "incident.base",
+          "text": {
+            "en": "Report AI incidents — such as accidental upload of sensitive data, harmful or hallucinated output, or unauthorized tool use — promptly through the incident-reporting process so they can be contained and documented.",
+            "es": "Reporte los incidentes de IA — como la subida accidental de datos sensibles, resultados dañinos o alucinados, o el uso de herramientas no autorizadas — con prontitud mediante el proceso de reporte de incidentes para que puedan contenerse y documentarse."
+          }
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "title": {
+        "en": "Employee training and AI literacy",
+        "es": "Formación de empleados y alfabetización en IA"
+      },
+      "clauses": [
+        {
+          "id": "training.base",
+          "text": {
+            "en": "Employees must complete AI literacy training covering AI limitations, verification of outputs, confidentiality, personal data, approved tools, prohibited uses and how to report incidents.",
+            "es": "Los empleados deben completar la formación en alfabetización de IA que cubra las limitaciones de la IA, la verificación de resultados, la confidencialidad, los datos personales, las herramientas aprobadas, los usos prohibidos y cómo reportar incidentes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "enforcement",
+      "title": {
+        "en": "Enforcement and policy review",
+        "es": "Cumplimiento y revisión de la política"
+      },
+      "clauses": [
+        {
+          "id": "enforcement.base",
+          "text": {
+            "en": "Breaches of this policy may lead to access restrictions and disciplinary measures. The policy is preliminary and will be reviewed and adapted with qualified professionals.",
+            "es": "El incumplimiento de esta política puede dar lugar a restricciones de acceso y medidas disciplinarias. La política es preliminar y se revisará y adaptará con profesionales cualificados."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ownerReview",
+      "title": {
+        "en": "Policy owner and review cadence",
+        "es": "Responsable y cadencia de revisión"
+      },
+      "clauses": [
+        {
+          "id": "ownerReview.base",
+          "text": {
+            "en": "Policy owner: AI governance owner. This preliminary policy should be reviewed at least every 6–12 months and whenever AI use, tools or regulation change materially.",
+            "es": "Responsable de la política: Responsable de gobernanza de IA. Esta política preliminar debe revisarse al menos cada 6–12 meses y cuando el uso de IA, las herramientas o la regulación cambien de forma material."
+          }
+        }
+      ]
+    }
+  ],
+  "approvedTools": [
+    {
+      "toolId": "copilot",
+      "toolName": "Microsoft Copilot",
+      "status": "approved",
+      "statusLabel": {
+        "en": "Approved",
+        "es": "Aprobada"
+      },
+      "permittedUseCases": {
+        "en": "Low-risk, non-sensitive productivity tasks with human review.",
+        "es": "Tareas de productividad de bajo riesgo y no sensibles con revisión humana."
+      },
+      "restrictedUseCases": {
+        "en": "High-impact, regulated or sensitive-data tasks without approval.",
+        "es": "Tareas de alto impacto, reguladas o con datos sensibles sin aprobación."
+      },
+      "dataAllowed": {
+        "en": "Non-sensitive business data per approval scope.",
+        "es": "Datos de negocio no sensibles según el alcance de aprobación."
+      },
+      "dataProhibited": {
+        "en": "Credentials/secrets and any data outside the approval scope.",
+        "es": "Credenciales/secretos y cualquier dato fuera del alcance de aprobación."
+      },
+      "owner": {
+        "en": "To be assigned (IT/Security or AI governance owner).",
+        "es": "Por asignar (TI/Seguridad o responsable de gobernanza de IA)."
+      },
+      "reviewDate": {
+        "en": "Set at adoption; review at least annually.",
+        "es": "Definir al adoptar; revisar al menos anualmente."
+      }
+    },
+    {
+      "toolId": "claude",
+      "toolName": "Claude",
+      "status": "approved",
+      "statusLabel": {
+        "en": "Approved",
+        "es": "Aprobada"
+      },
+      "permittedUseCases": {
+        "en": "Low-risk, non-sensitive productivity tasks with human review.",
+        "es": "Tareas de productividad de bajo riesgo y no sensibles con revisión humana."
+      },
+      "restrictedUseCases": {
+        "en": "High-impact, regulated or sensitive-data tasks without approval.",
+        "es": "Tareas de alto impacto, reguladas o con datos sensibles sin aprobación."
+      },
+      "dataAllowed": {
+        "en": "Non-sensitive business data per approval scope.",
+        "es": "Datos de negocio no sensibles según el alcance de aprobación."
+      },
+      "dataProhibited": {
+        "en": "Credentials/secrets and any data outside the approval scope.",
+        "es": "Credenciales/secretos y cualquier dato fuera del alcance de aprobación."
+      },
+      "owner": {
+        "en": "To be assigned (IT/Security or AI governance owner).",
+        "es": "Por asignar (TI/Seguridad o responsable de gobernanza de IA)."
+      },
+      "reviewDate": {
+        "en": "Set at adoption; review at least annually.",
+        "es": "Definir al adoptar; revisar al menos anualmente."
+      }
+    },
+    {
+      "toolId": "github-copilot",
+      "toolName": "GitHub Copilot",
+      "status": "conditionally_approved",
+      "statusLabel": {
+        "en": "Conditionally approved",
+        "es": "Aprobada con condiciones"
+      },
+      "permittedUseCases": {
+        "en": "Low-risk, non-sensitive productivity tasks with human review.",
+        "es": "Tareas de productividad de bajo riesgo y no sensibles con revisión humana."
+      },
+      "restrictedUseCases": {
+        "en": "High-impact, regulated or sensitive-data tasks without approval.",
+        "es": "Tareas de alto impacto, reguladas o con datos sensibles sin aprobación."
+      },
+      "dataAllowed": {
+        "en": "Non-sensitive, non-confidential, public-safe content only.",
+        "es": "Solo contenido no sensible, no confidencial y apto para herramientas públicas."
+      },
+      "dataProhibited": {
+        "en": "Credentials/secrets and any data outside the approval scope.",
+        "es": "Credenciales/secretos y cualquier dato fuera del alcance de aprobación."
+      },
+      "owner": {
+        "en": "To be assigned (IT/Security or AI governance owner).",
+        "es": "Por asignar (TI/Seguridad o responsable de gobernanza de IA)."
+      },
+      "reviewDate": {
+        "en": "Set at adoption; review at least annually.",
+        "es": "Definir al adoptar; revisar al menos anualmente."
+      }
+    }
+  ],
+  "sensitiveDataRules": [
+    {
+      "id": "personal",
+      "dataType": {
+        "en": "Personal data",
+        "es": "Datos personales"
+      },
+      "rule": {
+        "en": "Do not enter personal data into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca datos personales en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "client",
+      "dataType": {
+        "en": "Client/customer data",
+        "es": "Datos de clientes"
+      },
+      "rule": {
+        "en": "Do not enter client/customer data into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca datos de clientes en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "confidential",
+      "dataType": {
+        "en": "Confidential information",
+        "es": "Información confidencial"
+      },
+      "rule": {
+        "en": "Do not enter confidential information into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca información confidencial en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "sourceCode",
+      "dataType": {
+        "en": "Source code",
+        "es": "Código fuente"
+      },
+      "rule": {
+        "en": "Do not enter source code into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca código fuente en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "contracts",
+      "dataType": {
+        "en": "Contracts",
+        "es": "Contratos"
+      },
+      "rule": {
+        "en": "Do not enter contracts into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca contratos en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "financial",
+      "dataType": {
+        "en": "Financial information",
+        "es": "Información financiera"
+      },
+      "rule": {
+        "en": "Do not enter financial information into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca información financiera en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "employee",
+      "dataType": {
+        "en": "Employee data",
+        "es": "Datos de empleados"
+      },
+      "rule": {
+        "en": "Do not enter employee data into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca datos de empleados en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "health",
+      "dataType": {
+        "en": "Health data",
+        "es": "Datos de salud"
+      },
+      "rule": {
+        "en": "Never enter health data into AI tools that are not specifically approved and contracted for health data.",
+        "es": "Nunca introduzca datos de salud en herramientas de IA que no estén específicamente aprobadas y contratadas para datos de salud."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "legal",
+      "dataType": {
+        "en": "Legal/privileged material",
+        "es": "Material legal/privilegiado"
+      },
+      "rule": {
+        "en": "Do not enter legal/privileged material into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca material legal/privilegiado en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    },
+    {
+      "id": "tradeSecrets",
+      "dataType": {
+        "en": "Trade secrets",
+        "es": "Secretos comerciales"
+      },
+      "rule": {
+        "en": "Do not enter trade secrets into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca secretos comerciales en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "credentials",
+      "dataType": {
+        "en": "Credentials / secrets / API keys",
+        "es": "Credenciales / secretos / claves API"
+      },
+      "rule": {
+        "en": "Never enter credentials, passwords, API keys or secrets into any AI tool.",
+        "es": "Nunca introduzca credenciales, contraseñas, claves API o secretos en ninguna herramienta de IA."
+      },
+      "severity": "high"
+    },
+    {
+      "id": "regulatory",
+      "dataType": {
+        "en": "Sensitive regulatory data",
+        "es": "Datos regulatorios sensibles"
+      },
+      "rule": {
+        "en": "Do not enter sensitive regulatory data into AI tools unless the specific tool is approved for it.",
+        "es": "No introduzca datos regulatorios sensibles en herramientas de IA salvo que la herramienta concreta esté aprobada para ello."
+      },
+      "severity": "medium"
+    }
+  ],
+  "humanReview": [
+    {
+      "context": {
+        "en": "Client communications",
+        "es": "Comunicaciones con clientes"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Legal / compliance analysis",
+        "es": "Análisis legal / de cumplimiento"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "HR / employment decisions",
+        "es": "Decisiones de RR. HH. / laborales"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Financial decisions",
+        "es": "Decisiones financieras"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Code deployment",
+        "es": "Despliegue de código"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Public marketing content",
+        "es": "Contenido de marketing público"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Customer support",
+        "es": "Atención al cliente"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    },
+    {
+      "context": {
+        "en": "Regulated / high-impact activities",
+        "es": "Actividades reguladas / de alto impacto"
+      },
+      "required": true,
+      "requirement": {
+        "en": "Required — currently performed. Keep documenting the reviewer.",
+        "es": "Obligatoria — actualmente se realiza. Siga documentando al revisor."
+      }
+    }
+  ],
+  "disclosureRules": [
+    {
+      "context": {
+        "en": "Internal use of AI",
+        "es": "Uso interno de IA"
+      },
+      "required": true,
+      "rule": {
+        "en": "Disclosure rule already exists — keep it documented.",
+        "es": "Ya existe una regla de divulgación — manténgala documentada."
+      }
+    },
+    {
+      "context": {
+        "en": "Communications to clients/customers",
+        "es": "Comunicaciones a clientes"
+      },
+      "required": true,
+      "rule": {
+        "en": "Disclosure rule already exists — keep it documented.",
+        "es": "Ya existe una regla de divulgación — manténgala documentada."
+      }
+    },
+    {
+      "context": {
+        "en": "Public-facing content",
+        "es": "Contenido público"
+      },
+      "required": true,
+      "rule": {
+        "en": "Disclosure recommended/required — adopt a clear rule.",
+        "es": "Divulgación recomendada/obligatoria — adopte una regla clara."
+      }
+    },
+    {
+      "context": {
+        "en": "AI-generated images/audio/video",
+        "es": "Imágenes/audio/vídeo generados por IA"
+      },
+      "required": true,
+      "rule": {
+        "en": "Disclosure recommended/required — adopt a clear rule.",
+        "es": "Divulgación recomendada/obligatoria — adopte una regla clara."
+      }
+    },
+    {
+      "context": {
+        "en": "Decisions based on AI output",
+        "es": "Decisiones basadas en resultados de IA"
+      },
+      "required": false,
+      "rule": {
+        "en": "Consider whether disclosure is appropriate here.",
+        "es": "Considere si la divulgación es apropiada aquí."
+      }
+    },
+    {
+      "context": {
+        "en": "AI used in regulated work",
+        "es": "IA usada en trabajo regulado"
+      },
+      "required": true,
+      "rule": {
+        "en": "Disclosure recommended/required — adopt a clear rule.",
+        "es": "Divulgación recomendada/obligatoria — adopte una regla clara."
+      }
+    }
+  ],
+  "incident": {
+    "whatCounts": [
+      {
+        "en": "Accidental upload of sensitive, personal or confidential data to an AI tool.",
+        "es": "Subida accidental de datos sensibles, personales o confidenciales a una herramienta de IA."
+      },
+      {
+        "en": "Inaccurate, hallucinated or fabricated AI output that was relied upon.",
+        "es": "Resultado de IA inexacto, alucinado o inventado en el que se confió."
+      },
+      {
+        "en": "Discriminatory or biased AI output.",
+        "es": "Resultado de IA discriminatorio o sesgado."
+      },
+      {
+        "en": "Security incident or suspected data exposure via an AI tool.",
+        "es": "Incidente de seguridad o sospecha de exposición de datos vía una herramienta de IA."
+      },
+      {
+        "en": "Use of an unauthorized AI tool, or vendor outage.",
+        "es": "Uso de una herramienta de IA no autorizada, o caída de proveedor."
+      }
+    ],
+    "reportTo": {
+      "en": "Report to the AI governance owner (or IT/Security and Legal/Compliance if unassigned).",
+      "es": "Reporte al responsable de gobernanza de IA (o a TI/Seguridad y Legal/Cumplimiento si no está asignado)."
+    },
+    "timeline": {
+      "en": "Report without undue delay — ideally within 24 hours of discovery.",
+      "es": "Reporte sin demora indebida — idealmente dentro de las 24 horas tras el descubrimiento."
+    },
+    "infoToInclude": [
+      {
+        "en": "What happened and when.",
+        "es": "Qué ocurrió y cuándo."
+      },
+      {
+        "en": "Which tool and data were involved.",
+        "es": "Qué herramienta y datos estuvieron implicados."
+      },
+      {
+        "en": "Who was affected and potential impact.",
+        "es": "Quién se vio afectado y el impacto potencial."
+      }
+    ],
+    "escalation": [
+      {
+        "en": "AI governance owner assesses severity.",
+        "es": "El responsable de gobernanza de IA evalúa la gravedad."
+      },
+      {
+        "en": "Escalate to Legal/Compliance and Security for high-severity incidents.",
+        "es": "Escale a Legal/Cumplimiento y Seguridad en incidentes graves."
+      },
+      {
+        "en": "Notify affected parties/regulators only on professional advice.",
+        "es": "Notifique a afectados/reguladores solo con asesoramiento profesional."
+      }
+    ],
+    "containment": [
+      {
+        "en": "Stop the activity and revoke access if needed.",
+        "es": "Detenga la actividad y revoque accesos si es necesario."
+      },
+      {
+        "en": "Request deletion from the vendor where possible.",
+        "es": "Solicite la eliminación al proveedor cuando sea posible."
+      },
+      {
+        "en": "Preserve evidence for review.",
+        "es": "Conserve evidencia para su revisión."
+      }
+    ],
+    "documentation": [
+      {
+        "en": "Record the incident, decisions and actions taken.",
+        "es": "Registre el incidente, las decisiones y las acciones tomadas."
+      },
+      {
+        "en": "Track remediation to completion.",
+        "es": "Haga seguimiento de la remediación hasta su finalización."
+      },
+      {
+        "en": "Feed lessons learned back into training and this policy.",
+        "es": "Incorpore las lecciones aprendidas a la formación y a esta política."
+      }
+    ]
+  },
+  "aiLiteracy": [
+    {
+      "id": "limitations",
+      "text": {
+        "en": "Understand what AI can and cannot do (its limitations).",
+        "es": "Comprender qué puede y qué no puede hacer la IA (sus limitaciones)."
+      },
+      "priority": false
+    },
+    {
+      "id": "verify",
+      "text": {
+        "en": "Verify outputs before relying on them.",
+        "es": "Verificar los resultados antes de confiar en ellos."
+      },
+      "priority": false
+    },
+    {
+      "id": "confidential",
+      "text": {
+        "en": "Protect confidential data — do not paste it into public tools.",
+        "es": "Proteger los datos confidenciales — no pegarlos en herramientas públicas."
+      },
+      "priority": false
+    },
+    {
+      "id": "personal",
+      "text": {
+        "en": "Avoid misuse of personal data; apply data minimization.",
+        "es": "Evitar el mal uso de datos personales; aplicar la minimización de datos."
+      },
+      "priority": false
+    },
+    {
+      "id": "ip",
+      "text": {
+        "en": "Check intellectual-property risks in AI outputs.",
+        "es": "Revisar los riesgos de propiedad intelectual en los resultados de IA."
+      },
+      "priority": false
+    },
+    {
+      "id": "hallucinations",
+      "text": {
+        "en": "Detect hallucinations and fabricated facts.",
+        "es": "Detectar alucinaciones y datos inventados."
+      },
+      "priority": false
+    },
+    {
+      "id": "review",
+      "text": {
+        "en": "Apply human review in high-impact contexts.",
+        "es": "Aplicar revisión humana en contextos de alto impacto."
+      },
+      "priority": false
+    },
+    {
+      "id": "approvedTools",
+      "text": {
+        "en": "Follow approved-tool rules and statuses.",
+        "es": "Seguir las reglas y estados de las herramientas aprobadas."
+      },
+      "priority": false
+    },
+    {
+      "id": "report",
+      "text": {
+        "en": "Know how and when to report incidents.",
+        "es": "Saber cómo y cuándo reportar incidentes."
+      },
+      "priority": false
+    }
+  ],
+  "vendorWorkflow": {
+    "whenRequired": [
+      {
+        "en": "Before adopting any new AI tool or vendor.",
+        "es": "Antes de adoptar cualquier nueva herramienta o proveedor de IA."
+      },
+      {
+        "en": "When an existing vendor adds AI features or changes its model.",
+        "es": "Cuando un proveedor existente añade funciones de IA o cambia su modelo."
+      },
+      {
+        "en": "Before sending confidential, personal or client data to a tool.",
+        "es": "Antes de enviar datos confidenciales, personales o de clientes a una herramienta."
+      }
+    ],
+    "intakeFields": [
+      {
+        "en": "Tool/vendor name and purpose.",
+        "es": "Nombre del proveedor/herramienta y propósito."
+      },
+      {
+        "en": "Data types to be processed.",
+        "es": "Tipos de datos a tratar."
+      },
+      {
+        "en": "Plan/tier (free vs. enterprise) and account type.",
+        "es": "Plan/nivel (gratuito vs. empresarial) y tipo de cuenta."
+      },
+      {
+        "en": "Business owner requesting the tool.",
+        "es": "Responsable de negocio que solicita la herramienta."
+      }
+    ],
+    "reviewSteps": [
+      {
+        "en": "Privacy review: lawful basis, data processing terms, training on data.",
+        "es": "Revisión de privacidad: base legal, términos de tratamiento, entrenamiento con datos."
+      },
+      {
+        "en": "Security review: certifications, data location, retention/deletion.",
+        "es": "Revisión de seguridad: certificaciones, ubicación de datos, retención/eliminación."
+      },
+      {
+        "en": "Legal review: subprocessors, audit rights, incident notice, liability.",
+        "es": "Revisión legal: subencargados, derechos de auditoría, notificación de incidentes, responsabilidad."
+      }
+    ],
+    "approvalRoles": [
+      {
+        "en": "Privacy/DPO sign-off.",
+        "es": "Aprobación de privacidad/DPO."
+      },
+      {
+        "en": "Security/IT sign-off.",
+        "es": "Aprobación de seguridad/TI."
+      },
+      {
+        "en": "Legal/compliance sign-off.",
+        "es": "Aprobación legal/cumplimiento."
+      }
+    ],
+    "contractChecks": [
+      {
+        "en": "No training on customer data without consent.",
+        "es": "Sin entrenamiento con datos de clientes sin consentimiento."
+      },
+      {
+        "en": "Defined retention and deletion.",
+        "es": "Retención y eliminación definidas."
+      },
+      {
+        "en": "Incident notification and audit rights.",
+        "es": "Notificación de incidentes y derechos de auditoría."
+      },
+      {
+        "en": "Liability, indemnities and regulatory cooperation.",
+        "es": "Responsabilidad, indemnizaciones y cooperación regulatoria."
+      }
+    ],
+    "reviewCadence": {
+      "en": "Re-review approved vendors at least annually or on material change.",
+      "es": "Revisar de nuevo los proveedores aprobados al menos anualmente o ante cambios materiales."
+    }
+  },
+  "findings": [
+    {
+      "id": "sensitive-data-use",
+      "area": "D",
+      "severity": "medium",
+      "title": {
+        "en": "Sensitive data may be entered into AI tools",
+        "es": "Pueden introducirse datos sensibles en herramientas de IA"
+      },
+      "detail": {
+        "en": "Employees may currently input sensitive data into AI tools. This requires stricter sensitive-data rules and tool restrictions.",
+        "es": "Los empleados pueden introducir actualmente datos sensibles en herramientas de IA. Esto requiere reglas más estrictas sobre datos sensibles y restricciones de herramientas."
+      },
+      "recommendation": {
+        "en": "Apply the stricter sensitive-data rules in this package and restrict sensitive data to approved, enterprise-grade tools.",
+        "es": "Aplique las reglas más estrictas sobre datos sensibles de este paquete y limite los datos sensibles a herramientas empresariales aprobadas."
+      },
+      "triggeredBy": [
+        "confidential",
+        "client",
+        "sourceCode"
+      ]
+    }
+  ],
+  "missingInfo": [],
+  "nextSteps": [
+    {
+      "en": "Have this preliminary package reviewed and adapted by qualified professionals.",
+      "es": "Haga que profesionales cualificados revisen y adapten este paquete preliminar."
+    },
+    {
+      "en": "Re-run this assessment after implementing changes to track progress.",
+      "es": "Vuelva a ejecutar esta evaluación tras implementar cambios para medir el progreso."
+    }
+  ],
+  "conversion": {
+    "heading": {
+      "en": "Have the policy reviewed and adapted to your company.",
+      "es": "Haz que la política sea revisada y adaptada a tu empresa."
+    },
+    "body": {
+      "en": "This package is a preliminary draft. Our team can review and adapt it to your company, jurisdiction and risk profile, and train your employees.",
+      "es": "Este paquete es un borrador preliminar. Nuestro equipo puede revisarlo y adaptarlo a su empresa, jurisdicción y perfil de riesgo, y formar a sus empleados."
+    },
+    "ctas": [
+      {
+        "id": "request",
+        "label": {
+          "en": "Request policy review",
+          "es": "Solicitar revisión de la política"
+        }
+      },
+      {
+        "id": "book",
+        "label": {
+          "en": "Book AI governance consultation",
+          "es": "Agendar consulta de gobernanza de IA"
+        }
+      },
+      {
+        "id": "training",
+        "label": {
+          "en": "Get employee AI training package",
+          "es": "Solicitar paquete de formación en IA para empleados"
+        }
+      }
+    ]
+  },
+  "disclaimer": {
+    "en": "This tool generates preliminary AI governance materials for informational purposes only. It is not legal advice, not a final compliance review, and does not create a lawyer-client relationship. Your company's AI policy should be reviewed and adapted by qualified professionals before implementation.",
+    "es": "Esta herramienta genera materiales preliminares de gobernanza de IA con fines informativos. No constituye asesoramiento jurídico, no es una revisión final de cumplimiento y no crea una relación abogado-cliente. La política de IA de su empresa debe ser revisada y adaptada por profesionales cualificados antes de su implementación."
+  }
+}

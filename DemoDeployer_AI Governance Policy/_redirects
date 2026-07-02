@@ -1,0 +1,3 @@
+# Cloudflare Pages SPA fallback (static assets are served first; this only
+# catches unknown routes). Harmless because the app has no URL routing.
+/*    /index.html   200
