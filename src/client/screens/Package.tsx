@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PolicyPackage, PolicySection } from "../../shared/index";
 import { useT } from "../i18n/useT";
+import { api } from "../api";
 import { Card, SectionCard, SeverityBadge, Notice } from "../components/ui";
 
 interface Props {
@@ -12,11 +13,12 @@ interface Props {
   goLiteracy: () => void;
   goVendor: () => void;
   goContact: () => void;
+  goQuestionnaire: () => void;
   onCta: (id: string) => void;
 }
 
 export function Package(props: Props): React.ReactElement {
-  const { t, tr } = useT();
+  const { t, tr, lang } = useT();
   const p = props.pkg;
   let n = 0;
 
@@ -25,6 +27,48 @@ export function Package(props: Props): React.ReactElement {
       <div className="section-eyebrow">{t("nav.package")}</div>
       <h1 style={{ marginBottom: 4 }}>{tr(p.title)}</h1>
       <p className="muted">{p.companyName}</p>
+
+      {/* Available actions — the "what now?" panel, before the sections */}
+      <section className="card actions-panel">
+        <h2>{t("actions.title")}</h2>
+        <Notice>{t("actions.ready")}</Notice>
+        <p className="muted small" style={{ margin: "10px 0 0" }}>
+          {t("actions.guide")}
+        </p>
+        <div className="btn-row">
+          <a
+            className="btn btn--primary"
+            href={api.exportUrl(p.id, { section: "full", format: "pdf", lang })}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("actions.pdf")}
+          </a>
+          <a
+            className="btn btn--navy"
+            href={api.exportUrl(p.id, { section: "full", format: "docx", lang })}
+            download
+          >
+            {t("actions.word")}
+          </a>
+          <a
+            className="btn btn--ghost"
+            href={api.exportUrl(p.id, { section: "full", format: "json", lang })}
+            download
+          >
+            {t("actions.json")}
+          </a>
+          <button className="btn btn--ghost" onClick={props.goQuestionnaire}>
+            {t("actions.back")}
+          </button>
+          <button className="btn btn--ghost" onClick={props.goQuestionnaire}>
+            {t("actions.edit")}
+          </button>
+          <button className="btn btn--ghost" onClick={props.goContact}>
+            {t("actions.review")}
+          </button>
+        </div>
+      </section>
 
       <div className="btn-row" style={{ margin: "14px 0 24px" }}>
         <button className="btn btn--primary btn--sm" onClick={props.goExport}>

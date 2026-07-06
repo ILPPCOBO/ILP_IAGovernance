@@ -21,7 +21,21 @@ export interface L {
 
 export type Severity = "low" | "medium" | "high";
 
-export type ToolStatus = "approved" | "tolerated" | "prohibited" | "unknown";
+/**
+ * Adoption status of an AI tool inside the company ("AI tool usage status").
+ * The first four are legacy values kept for backward compatibility with
+ * previously saved sessions; the UI now offers the richer set below.
+ */
+export type ToolStatus =
+  | "approved"
+  | "tolerated"
+  | "prohibited"
+  | "unknown"
+  | "in_use"
+  | "pilot"
+  | "pending_approval"
+  | "approved_not_implemented"
+  | "discarded";
 
 export type ApprovedToolStatus =
   | "approved"
@@ -48,6 +62,13 @@ export type QuestionType =
 export interface QuestionOption {
   value: string;
   label: L;
+  /** Optional clarifying help shown under/next to the option. */
+  help?: L;
+  /**
+   * Exclusive options ("None of the above"-style): selecting one clears every
+   * other selection in the question, and selecting any other option clears it.
+   */
+  exclusive?: boolean;
 }
 
 export interface AdminQuestion {

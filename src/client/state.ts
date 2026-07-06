@@ -115,3 +115,132 @@ export function requiredComplete(
       return true;
     });
 }
+
+/* ------------------------------------------------------------------ */
+/* Multi-select toggle with exclusive ("None of the above") options    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Toggle `value` inside a multi-select answer, honouring exclusive options:
+ * selecting an exclusive option clears everything else; selecting any other
+ * option clears all exclusive ones. Deselecting simply removes the value.
+ */
+export function applyMultiToggle(
+  options: AdminQuestion["options"],
+  current: string[],
+  value: string,
+): string[] {
+  const isOn = current.includes(value);
+  if (isOn) return current.filter((v) => v !== value);
+
+  const exclusiveValues = new Set(
+    (options ?? []).filter((o) => o.exclusive).map((o) => o.value),
+  );
+  if (exclusiveValues.has(value)) return [value];
+  return [...current.filter((v) => !exclusiveValues.has(v)), value];
+}
+
+/* ------------------------------------------------------------------ */
+/* Draft persistence (autosave + session recovery)                     */
+/* ------------------------------------------------------------------ */
+
+/** Minimal Storage-like contract so tests can inject a fake. */
+export interface DraftStorage {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+}
+
+export const DRAFT_KEY = "aigpb_draft_v1";
+
+export interface DraftState {
+  lang?: string;
+  accepted?: boolean;
+  answers: AnswerMap;
+  others: OtherMap;
+  toolRecords: ToolMap;
+  /** The generated package, if any, so a refresh keeps the report. */
+  pkg?: unknown;
+  savedAt: string;
+}
+
+function defaultStorage(): DraftStorage | null {
+  try {
+    if (typeof localStorage !== "undefined") return localStorage;
+  } catch {
+    /* SSR / privacy mode */
+  }
+  return null;
+}
+
+export function saveDraft(
+  draft: Omit<DraftState, "savedAt">,
+  storage: DraftStorage | null = defaultStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(
+      DRAFT_KEY,
+      JSON.stringify({ ...draft, savedAt: new Date().toISOString() }),
+    );
+  } catch {
+    /* quota/private mode: autosave is best-effort */
+  }
+}
+
+export function loadDraft(
+  storage: DraftStorage | null = defaultStorage(),
+): DraftState | null {
+  if (!storage) return null;
+  try {
+    const raw = storage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as DraftState;
+    if (!parsed || typeof parsed !== "object" || !parsed.answers) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+export function clearDraft(
+  storage: DraftStorage | null = defaultStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.removeItem(DRAFT_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** True when a draft has meaningful progress worth offering to restore. */
+export function draftHasProgress(draft: DraftState | null): boolean {
+  if (!draft) return false;
+  return Object.keys(draft.answers ?? {}).length > 0 || draft.pkg != null;
+}
+
+/* ------------------------------------------------------------------ */
+/* Generation timeout                                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Reject with Error("generation_timeout") if `promise` takes longer than
+ * `ms`. The user's answers are never touched — callers keep state intact
+ * and offer a retry.
+ */
+export function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("generation_timeout")), ms);
+    promise.then(
+      (v) => {
+        clearTimeout(timer);
+        resolve(v);
+      },
+      (e) => {
+        clearTimeout(timer);
+        reject(e);
+      },
+    );
+  });
+}

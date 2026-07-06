@@ -7,6 +7,7 @@
 import React from "react";
 import type { AdminQuestion, AnswerValue } from "../../shared/index";
 import { useT } from "../i18n/useT";
+import { applyMultiToggle } from "../state";
 
 interface Props {
   question: AdminQuestion;
@@ -100,14 +101,16 @@ export function QuestionField({
                   <input
                     type="checkbox"
                     checked={on}
-                    onChange={() => {
-                      const next = on
-                        ? arr.filter((v) => v !== opt.value)
-                        : [...arr, opt.value];
-                      onChange(next);
-                    }}
+                    onChange={() =>
+                      onChange(applyMultiToggle(q.options, arr, opt.value))
+                    }
                   />
-                  {tr(opt.label)}
+                  <span className="option__body">
+                    {tr(opt.label)}
+                    {opt.help && (
+                      <span className="option__help">{tr(opt.help)}</span>
+                    )}
+                  </span>
                 </label>
               );
             })}

@@ -20,7 +20,12 @@ import {
   ToolMap,
   buildProfile,
   buildQuestionnaire,
+  clearDraft,
+  draftHasProgress,
+  loadDraft,
   requiredComplete,
+  saveDraft,
+  withTimeout,
 } from "./state";
 import { CenterLoading, Toast } from "./components/ui";
 import {
@@ -31,7 +36,7 @@ import {
 } from "./components/ILPBrand";
 import { Welcome } from "./screens/Welcome";
 import { Disclaimer } from "./screens/Disclaimer";
-import { Questionnaire } from "./screens/Questionnaire";
+import { Questionnaire, Stepper } from "./screens/Questionnaire";
 import { Summary } from "./screens/Summary";
 import { Package } from "./screens/Package";
 import { Literacy } from "./screens/Literacy";
@@ -148,11 +153,19 @@ function Shell(props: {
   const [others, setOthers] = useState<OtherMap>({});
   const [toolRecords, setToolRecords] = useState<ToolMap>({});
   const [uploads, setUploads] = useState<UploadedPolicyDocument[]>([]);
+  // Current questionnaire category index — lifted here so the stepper can
+  // jump to a category without the Questionnaire losing any answers.
+  const [qStep, setQStep] = useState(0);
 
   // generated artifacts
   const [pkg, setPkg] = useState<PolicyPackage | null>(null);
   const [clauseEdits, setClauseEdits] = useState<Record<string, string>>({});
   const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState(false);
+
+  // draft recovery banner + guard so autosave never runs before restore
+  const [resumeOpen, setResumeOpen] = useState(false);
+  const restoredRef = useRef(false);
 
   const [toast, setToast] = useState<{ msg: string; variant?: "error" | "info" } | null>(
     null,
@@ -175,6 +188,74 @@ function Shell(props: {
     setToast({ msg, variant });
     window.setTimeout(() => setToast(null), 3200);
   }, []);
+
+  // B. RECOVERY — restore the autosaved draft once, on mount. Runs before the
+  // autosave effect below (declaration order), so nothing is saved earlier.
+  useEffect(() => {
+    if (restoredRef.current) return;
+    restoredRef.current = true;
+    const draft = loadDraft();
+    if (!draft || !draftHasProgress(draft)) return;
+    setAnswers(draft.answers ?? {});
+    setOthers(draft.others ?? {});
+    setToolRecords(draft.toolRecords ?? {});
+    if (draft.pkg) setPkg(draft.pkg as PolicyPackage);
+    if (draft.accepted) setAccepted(true);
+    if (draft.lang === "en" || draft.lang === "es" || draft.lang === "zh") {
+      setLang(draft.lang);
+    }
+    setResumeOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A. AUTOSAVE — debounced draft persistence whenever the draft changes.
+  useEffect(() => {
+    if (!restoredRef.current) return;
+    const timer = window.setTimeout(() => {
+      saveDraft({ lang, accepted, answers, others, toolRecords, pkg });
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [lang, accepted, answers, others, toolRecords, pkg]);
+
+  const resumeContinue = () => {
+    setResumeOpen(false);
+    setScreen(pkg ? "package" : "questionnaire");
+  };
+
+  const resumeRestart = () => {
+    clearDraft();
+    setAnswers({});
+    setOthers({});
+    setToolRecords({});
+    setPkg(null);
+    setClauseEdits({});
+    setAccepted(false);
+    setQStep(0);
+    setGenError(false);
+    setResumeOpen(false);
+    setScreen("welcome");
+  };
+
+  const handleSaveProgress = () => {
+    saveDraft({ lang, accepted, answers, others, toolRecords, pkg });
+    showToast(t("q.savedToast"));
+  };
+
+  // F (part of D+F). Offline escape hatch: download the raw draft as JSON.
+  const downloadAnswersJson = () => {
+    const blob = new Blob(
+      [JSON.stringify({ answers, others, toolRecords }, null, 2)],
+      { type: "application/json" },
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "answers.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
 
   // Sync accepted state from session on mount.
   useEffect(() => {
@@ -227,21 +308,40 @@ function Shell(props: {
       showToast(t("common.error"), "error");
       return;
     }
+    setGenError(false);
     setGenerating(true);
+    // C. Enforce a minimum overlay display so the loading state never flashes.
+    const startedAt = Date.now();
+    const settleMinDelay = (): Promise<void> => {
+      const remaining = 600 - (Date.now() - startedAt);
+      return remaining > 0
+        ? new Promise((resolve) => setTimeout(resolve, remaining))
+        : Promise.resolve();
+    };
     try {
       const questionnaire = buildQuestionnaire(answers, others, toolRecords);
       const profile = buildProfile(answers);
-      const result = await api.generate({ profile, questionnaire });
+      // D+F. Hard 20s cap so a hung request surfaces as a retryable error.
+      const result = await withTimeout(
+        api.generate({ profile, questionnaire }),
+        20000,
+      );
+      await settleMinDelay();
       setPkg(result);
       setClauseEdits({});
       setScreen("summary");
+      showToast(t("actions.ready"));
     } catch (err) {
+      await settleMinDelay();
       if (err instanceof ApiError && err.status === 403) {
         showToast(t("disclaimer.mustAccept"), "error");
         setAccepted(false);
         setScreen("disclaimer");
       } else {
-        showToast(t("common.error"), "error");
+        // Any other failure (incl. timeout): keep the screen and every answer
+        // intact and show the prominent retry panel instead.
+        setGenError(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } finally {
       setGenerating(false);
@@ -266,6 +366,69 @@ function Shell(props: {
     }
     setScreen(s);
   };
+
+  /* ------------------------------------------------ 6-step journey stepper */
+
+  const stepperLabels = [
+    t("stepper.company"), // A
+    t("stepper.tools"), // B + C
+    t("stepper.data"), // D
+    t("stepper.processes"), // E..J
+    t("stepper.review"), // summary screen
+    t("stepper.report"), // package screen
+  ];
+
+  const catGroup = (id: string): number =>
+    id === "A" ? 0 : id === "B" || id === "C" ? 1 : id === "D" ? 2 : 3;
+
+  const firstCatIndexOfGroup = (group: number): number =>
+    config.categories.findIndex((c) => catGroup(c.id) === group);
+
+  const clampedQStep = Math.max(
+    0,
+    Math.min(qStep, config.categories.length - 1),
+  );
+
+  const stepperCurrent =
+    screen === "summary"
+      ? 4
+      : screen === "package" ||
+          screen === "literacy" ||
+          screen === "vendor" ||
+          screen === "export"
+        ? 5
+        : catGroup(config.categories[clampedQStep]?.id ?? "A");
+
+  // Previous steps are always revisitable; forward jumps only to reachable
+  // steps (review/report need a generated package, which also marks every
+  // questionnaire step as visited).
+  const canGoStep = (i: number): boolean => {
+    if (i === stepperCurrent) return false;
+    if (i >= 4) return !!pkg;
+    if (firstCatIndexOfGroup(i) < 0) return false;
+    return i < stepperCurrent || !!pkg;
+  };
+
+  const goStep = (i: number): void => {
+    if (!canGoStep(i)) return;
+    if (i === 4) {
+      setScreen("summary");
+      return;
+    }
+    if (i === 5) {
+      setScreen("package");
+      return;
+    }
+    const idx = firstCatIndexOfGroup(i);
+    if (idx >= 0) {
+      setGenError(false);
+      setQStep(idx);
+      setScreen("questionnaire");
+    }
+  };
+
+  const showStepper =
+    screen === "questionnaire" || screen === "summary" || screen === "package";
 
   const navItems: { id: Screen; label: string; needsPkg?: boolean }[] = [
     { id: "welcome", label: t("nav.welcome") },
@@ -337,6 +500,67 @@ function Shell(props: {
 
       <main className="main">
         <div className="container">
+          {resumeOpen && (
+            <div className="resume-banner" role="status">
+              <p className="resume-banner__text">{t("resume.title")}</p>
+              <div className="btn-row">
+                <button
+                  type="button"
+                  className="btn btn--primary btn--sm"
+                  onClick={resumeContinue}
+                >
+                  {t("resume.continue")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--sm"
+                  onClick={resumeRestart}
+                >
+                  {t("resume.restart")}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {showStepper && (
+            <Stepper
+              steps={stepperLabels}
+              current={stepperCurrent}
+              isNavigable={canGoStep}
+              onNavigate={goStep}
+            />
+          )}
+
+          {genError && screen === "questionnaire" && (
+            <div className="gen-error" role="alert">
+              <h2>{t("gen.error.title")}</h2>
+              <p>{t("gen.error.body")}</p>
+              <div className="btn-row">
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => void generate()}
+                >
+                  {t("gen.error.retry")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--ghost"
+                  onClick={() => setGenError(false)}
+                >
+                  {t("gen.error.back")}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--ghost"
+                  onClick={downloadAnswersJson}
+                >
+                  {t("gen.error.json")}
+                </button>
+              </div>
+            </div>
+          )}
+
           {screen === "welcome" && (
             <Welcome
               onStart={() => setScreen(accepted ? "questionnaire" : "disclaimer")}
@@ -366,6 +590,9 @@ function Shell(props: {
               addUpload={addUpload}
               onGenerate={generate}
               generating={generating}
+              onSaveProgress={handleSaveProgress}
+              step={clampedQStep}
+              setStep={setQStep}
             />
           )}
 
@@ -382,6 +609,7 @@ function Shell(props: {
               goLiteracy={() => setScreen("literacy")}
               goVendor={() => setScreen("vendor")}
               goContact={() => setScreen("contact")}
+              goQuestionnaire={() => setScreen("questionnaire")}
               onCta={handleCta}
             />
           )}
@@ -429,12 +657,30 @@ function Shell(props: {
       <ILPFloatButton onClick={() => setIlpOpen(true)} />
       <ILPContactModal
         open={ilpOpen}
+        hasReport={!!pkg}
         onClose={() => setIlpOpen(false)}
         onReview={() => {
           setIlpOpen(false);
           setScreen("contact");
         }}
       />
+
+      {/* C. Full-screen generation overlay (min 600ms, see generate()). */}
+      {generating && (
+        <div className="gen-overlay" role="status" aria-live="polite">
+          <div className="gen-overlay__card">
+            <span className="spinner spinner--lg" aria-hidden="true" />
+            <h2>{t("gen.loading.title")}</h2>
+            <p>{t("gen.loading.sub")}</p>
+            <div className="gen-bar" aria-hidden="true">
+              <div className="gen-bar__fill" />
+            </div>
+            <p className="small muted" style={{ margin: 0 }}>
+              {t("gen.loading.warn")}
+            </p>
+          </div>
+        </div>
+      )}
 
       {toast && <Toast message={toast.msg} variant={toast.variant} />}
     </div>

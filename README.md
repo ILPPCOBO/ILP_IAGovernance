@@ -361,4 +361,38 @@ preliminary, and **not legal advice**.
 - **Admin token:** `x-admin-token` header; default `admin-demo` (env
   `ADMIN_TOKEN`).
 - **Storage dir:** `data/` (override with `DATA_DIR`).
-- **Languages:** English / Spanish, toggleable throughout.
+- **Languages:** English / Spanish / Chinese (中文), toggleable throughout.
+
+## Questionnaire clarity & stability options (2026-07 update)
+
+The questionnaire and result flow include several usability options:
+
+- **AI tool usage status** (ES: «Estado de uso de la herramienta de IA») — the
+  per-tool "status" field now uses adoption-focused options: *In use*,
+  *Pilot/testing phase*, *Pending approval*, *Approved but not yet implemented*,
+  *Discarded*, *Not sure / to be confirmed*, with a help text explaining the
+  field. Legacy values remain supported.
+- **Data & confidentiality**: the list now includes **"Anonymized or pseudonymized data"**
+  (informational: the report notes that anonymization robustness should be
+  reviewed) and **"None of the above"** (ES: «Ninguno de los anteriores»), an
+  *exclusive* option — selecting it clears the other choices and vice versa.
+  The credentials option is now labelled
+  **"Credentials, passwords, tokens or API keys"** with a help text.
+- **Incident reporting**: a new exclusive option **"We do not currently have an
+  incident reporting process"** (ES: «No contamos actualmente con un proceso de
+  reporte de incidentes»). Selecting it scores the incident category as a gap
+  and adds a high-priority recommendation to establish an internal reporting
+  channel, owners, documentation, review protocol, response times and
+  escalation to legal/compliance/IT/security.
+- **Autosave & session recovery**: questionnaire progress (language, answers,
+  tool records, generated report) is autosaved to `localStorage`
+  (`aigpb_draft_v1`). After a refresh the app offers *Continue* / *Start over*.
+- **Stable generation**: a clear loading state, a 20s timeout with retry, and
+  an error panel (retry / back to questionnaire / download answers as JSON)
+  that never discards answers; a global error boundary prevents blank screens.
+- **Guided result**: a visible 6-step stepper (Company details → AI tools →
+  Data & confidentiality → Internal processes → Review → Report), and an
+  "Available actions" panel on the report with *Download PDF / Word / JSON*,
+  *Back to questionnaire*, *Edit answers* and *Request legal review*.
+
+All of the above is available in English, Spanish and Chinese.

@@ -127,7 +127,11 @@ export function computeScore(
             J: "restrictions",
           }[rule.category as "E" | "F" | "G" | "H" | "I" | "J"];
           if (key) {
-            const selected = arr(a[key]);
+            // Exclusive "gap" options (e.g. incidentProcess: "noProcess") are
+            // explicit signals that NO control exists — they never score.
+            const selected = arr(a[key]).filter(
+              (v) => v !== "noProcess" && v !== "none",
+            );
             const denom = DENOM[key] ?? 1;
             earned = Math.round((rule.max * selected.length) / denom);
             notes = l(

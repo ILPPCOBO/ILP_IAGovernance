@@ -32,15 +32,66 @@ interface Props {
   addUpload: (doc: UploadedPolicyDocument) => void;
   onGenerate: () => Promise<void>;
   generating: boolean;
+  /** Manual "save progress" action (wired from App: saveDraft + toast). */
+  onSaveProgress?: () => void;
+  /** Current category index — lifted to App so the stepper can drive it. */
+  step: number;
+  setStep: (step: number) => void;
+}
+
+/* ------------------------------------------------------------- stepper */
+
+/**
+ * Horizontal 6-step journey indicator (company → tools → data → processes →
+ * review → report). Rendered by App above the questionnaire, summary and
+ * package screens; completed steps show a check and are clickable.
+ */
+export function Stepper(props: {
+  steps: string[];
+  current: number;
+  isNavigable: (index: number) => boolean;
+  onNavigate: (index: number) => void;
+}): React.ReactElement {
+  return (
+    <ol className="stepper">
+      {props.steps.map((label, i) => {
+        const done = i < props.current;
+        const isCurrent = i === props.current;
+        const clickable = !isCurrent && props.isNavigable(i);
+        const state = done
+          ? "stepper__item--done"
+          : isCurrent
+            ? "stepper__item--current"
+            : "stepper__item--upcoming";
+        return (
+          <li key={`${i}-${label}`} className={`stepper__item ${state}`}>
+            <button
+              type="button"
+              className="stepper__btn"
+              disabled={!clickable}
+              aria-current={isCurrent ? "step" : undefined}
+              onClick={() => props.onNavigate(i)}
+            >
+              <span className="stepper__num" aria-hidden="true">
+                {done ? "✓" : i + 1}
+              </span>
+              <span className="stepper__label">{label}</span>
+            </button>
+          </li>
+        );
+      })}
+    </ol>
+  );
 }
 
 export function Questionnaire(props: Props): React.ReactElement {
   const { t, tr } = useT();
-  const [step, setStep] = useState(0);
 
   const cats = props.categories;
-  const cat = cats[step];
   const total = cats.length;
+  // Clamp in case the admin config shrank the category list mid-session.
+  const step = Math.max(0, Math.min(props.step, total - 1));
+  const cat = cats[step];
 
   const questionsForCat = useMemo(
     () => props.questions.filter((q) => q.category === cat.id),
@@ -50,8 +101,8 @@ export function Questionnaire(props: Props): React.ReactElement {
   const isLast = step === total - 1;
   const isFirst = step === 0;
 
-  const back = () => setStep((s) => Math.max(0, s - 1));
-  const next = () => setStep((s) => Math.min(total - 1, s + 1));
+  const back = () => props.setStep(Math.max(0, step - 1));
+  const next = () => props.setStep(Math.min(total - 1, step + 1));
 
   return (
     <div className="screen" style={{ maxWidth: 800, margin: "0 auto" }}>
@@ -121,21 +172,32 @@ export function Questionnaire(props: Props): React.ReactElement {
         >
           {t("q.back")}
         </button>
-        {!isLast ? (
-          <button type="button" className="btn btn--navy" onClick={next}>
-            {t("q.next")}
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn--primary"
-            onClick={props.onGenerate}
-            disabled={props.generating}
-          >
-            {props.generating && <Spinner />}
-            {t("q.generate")}
-          </button>
-        )}
+        <span className="btn-row">
+          {props.onSaveProgress && (
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={props.onSaveProgress}
+            >
+              {t("q.saveProgress")}
+            </button>
+          )}
+          {!isLast ? (
+            <button type="button" className="btn btn--navy" onClick={next}>
+              {t("q.next")}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--primary"
+              onClick={props.onGenerate}
+              disabled={props.generating}
+            >
+              {props.generating && <Spinner />}
+              {t("q.generate")}
+            </button>
+          )}
+        </span>
       </div>
     </div>
   );
@@ -175,12 +237,15 @@ function ToolEditors(props: {
             <div className="tool-grid">
               <Select
                 label={t("q.tool.status")}
+                help={t("q.tool.statusHelp")}
                 value={rec.status}
                 onChange={(v) => set({ status: v as AIToolRecord["status"] })}
                 options={[
-                  ["approved", t("status.approved")],
-                  ["tolerated", t("status.tolerated")],
-                  ["prohibited", t("status.prohibited")],
+                  ["in_use", t("status.inUse")],
+                  ["pilot", t("status.pilot")],
+                  ["pending_approval", t("status.pendingApproval")],
+                  ["approved_not_implemented", t("status.approvedNotImplemented")],
+                  ["discarded", t("status.discarded")],
                   ["unknown", t("status.unknown")],
                 ]}
               />
@@ -251,6 +316,8 @@ function Select(props: {
   value: string;
   options: [string, string][];
   onChange: (v: string) => void;
+  /** Optional clarifying text rendered directly under the select. */
+  help?: string;
 }): React.ReactElement {
   return (
     <label>
@@ -262,6 +329,7 @@ function Select(props: {
           </option>
         ))}
       </select>
+      {props.help && <p className="field__help">{props.help}</p>}
     </label>
   );
 }

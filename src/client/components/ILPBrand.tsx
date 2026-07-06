@@ -96,8 +96,13 @@ export function ILPContactModal(props: {
   open: boolean;
   onClose: () => void;
   onReview: () => void;
+  /** When a report exists beneath the overlay, dismissing reads "back to report". */
+  hasReport?: boolean;
 }): React.ReactElement | null {
   const { t } = useT();
+  const dismissLabel = props.hasReport
+    ? t("ilp.modal.backToReport")
+    : t("ilp.modal.later");
 
   useEffect(() => {
     if (!props.open) return;
@@ -124,7 +129,7 @@ export function ILPContactModal(props: {
         <button
           type="button"
           className="ilp-modal__close"
-          aria-label={t("ilp.modal.later")}
+          aria-label={dismissLabel}
           onClick={props.onClose}
         >
           ×
@@ -140,6 +145,7 @@ export function ILPContactModal(props: {
         <div className="ilp-modal__body">
           <div className="section-eyebrow">{t("ilp.modal.eyebrow")}</div>
           <h2>{t("ilp.modal.title")}</h2>
+          <p className="ilp-modal__subtitle">{t("ilp.modal.subtitle")}</p>
           <p>{t("ilp.modal.body")}</p>
 
           <ul className="ilp-contact-list">
@@ -174,7 +180,7 @@ export function ILPContactModal(props: {
               {t("ilp.modal.call")}
             </a>
             <button type="button" className="btn btn--plain" onClick={props.onClose}>
-              {t("ilp.modal.later")}
+              {dismissLabel}
             </button>
           </div>
 

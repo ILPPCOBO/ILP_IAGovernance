@@ -62,7 +62,7 @@ const SENSITIVE_TYPES: { id: string; label: L }[] = [
   { id: "health", label: l("Health data", "Datos de salud", "健康数据") },
   { id: "legal", label: l("Legal/privileged material", "Material legal/privilegiado", "法律/受特权保护的材料") },
   { id: "tradeSecrets", label: l("Trade secrets", "Secretos comerciales", "商业秘密") },
-  { id: "credentials", label: l("Credentials / secrets / API keys", "Credenciales / secretos / claves API", "凭据、密码或 API 密钥") },
+  { id: "credentials", label: l("Credentials, passwords, tokens or API keys", "Credenciales, contraseñas, tokens o claves API", "凭据、密码、令牌或 API 密钥") },
   { id: "regulatory", label: l("Sensitive regulatory data", "Datos regulatorios sensibles", "敏感监管数据") },
 ];
 
@@ -107,7 +107,11 @@ export function generatePackage(input: GenerateInput): PolicyPackage {
   const toolsUsed = arr(a.toolsUsed);
   const humanReview = arr(a.humanReview);
   const disclosure = arr(a.disclosure);
-  const incidentProcess = arr(a.incidentProcess);
+  // "noProcess" is the exclusive "we have no incident-reporting process"
+  // option: it is an explicit gap signal, not a control.
+  const incidentProcessAll = arr(a.incidentProcess);
+  const noIncidentProcess = incidentProcessAll.includes("noProcess");
+  const incidentProcess = incidentProcessAll.filter((v) => v !== "noProcess");
   const vendorReview = arr(a.vendorReview);
   const training = arr(a.training);
   const restrictions = arr(a.restrictions);
@@ -159,6 +163,54 @@ export function generatePackage(input: GenerateInput): PolicyPackage {
     });
   }
 
+  if (dataInputs.includes("anonymized")) {
+    push({
+      id: "anonymized-data",
+      area: "D",
+      severity: "low",
+      title: l(
+        "Anonymized or pseudonymized data in use",
+        "Uso de datos anonimizados o seudonimizados",
+        "使用匿名化或假名化数据",
+      ),
+      detail: l(
+        "The company indicates it uses anonymized or pseudonymized data. This may reduce certain privacy risks, but it should be reviewed whether anonymization is irreversible or whether pseudonymization allows re-identification.",
+        "La empresa indica que utiliza datos anonimizados o seudonimizados. Esto puede reducir ciertos riesgos de privacidad, pero debe revisarse si la anonimización es irreversible o si la seudonimización permite reidentificación.",
+        "企业表示其使用匿名化或假名化数据。这可以降低某些隐私风险，但应审查匿名化是否不可逆，以及假名化是否可能允许重新识别。",
+      ),
+      recommendation: l(
+        "Have qualified professionals verify the robustness of the anonymization/pseudonymization and document the assessment.",
+        "Haga que profesionales cualificados verifiquen la solidez de la anonimización/seudonimización y documenten la evaluación.",
+        "请由合格的专业人士核实匿名化/假名化的可靠性，并将评估记录在案。",
+      ),
+      triggeredBy: ["dataInputs: anonymized"],
+    });
+  }
+
+  if (dataInputs.includes("none")) {
+    push({
+      id: "no-sensitive-data-identified",
+      area: "D",
+      severity: "low",
+      title: l(
+        "No sensitive data categories identified",
+        "Sin categorías de datos sensibles identificadas",
+        "未识别敏感数据类别",
+      ),
+      detail: l(
+        "The company has not identified the use of the sensitive data categories listed in this section.",
+        "La empresa no ha identificado el uso de las categorías de datos sensibles listadas en esta sección.",
+        "企业未发现使用本节所列的敏感数据类别。",
+      ),
+      recommendation: l(
+        "Keep this under periodic review: AI use evolves quickly, and new data categories may enter AI tools over time.",
+        "Manténgalo bajo revisión periódica: el uso de IA evoluciona rápido y nuevas categorías de datos pueden entrar en las herramientas con el tiempo.",
+        "请定期复查这一情况：人工智能的使用变化很快，新的数据类别可能随时间进入人工智能工具。",
+      ),
+      triggeredBy: ["dataInputs: none"],
+    });
+  }
+
   if (highRiskPublic) {
     push({
       id: "public-tool-confidential",
@@ -200,23 +252,29 @@ export function generatePackage(input: GenerateInput): PolicyPackage {
     });
   }
 
-  if (incidentProcess.length === 0) {
+  if (incidentProcess.length === 0 || noIncidentProcess) {
     push({
       id: "no-incident-process",
       area: "G",
       severity: "high",
       title: l("No AI incident-reporting process", "Sin proceso de reporte de incidentes de IA", "缺少人工智能事件报告流程"),
       detail: l(
-        "There is no process for reporting AI incidents such as accidental data uploads, harmful output or unauthorized tool use.",
-        "No existe un proceso para reportar incidentes de IA como subidas accidentales de datos, resultados dañinos o uso de herramientas no autorizadas.",
-        "目前没有用于报告人工智能事件（如数据意外上传、有害输出或未经授权使用工具）的流程。",
+        noIncidentProcess
+          ? "The company states it does not currently have an incident-reporting process for AI-related incidents. This is a governance gap."
+          : "There is no process for reporting AI incidents such as accidental data uploads, harmful output or unauthorized tool use.",
+        noIncidentProcess
+          ? "La empresa indica que no cuenta actualmente con un proceso de reporte de incidentes relacionados con IA. Esto es una brecha de gobernanza."
+          : "No existe un proceso para reportar incidentes de IA como subidas accidentales de datos, resultados dañinos o uso de herramientas no autorizadas.",
+        noIncidentProcess
+          ? "企业表示目前没有针对人工智能相关事件的报告流程。这是一项治理缺口。"
+          : "目前没有用于报告人工智能事件（如数据意外上传、有害输出或未经授权使用工具）的流程。",
       ),
       recommendation: l(
-        "Adopt the incident-reporting process included in this package.",
-        "Adopte el proceso de reporte de incidentes incluido en este paquete.",
-        "请采用本方案包中包含的事件报告流程。",
+        "Adopt the incident-reporting process included in this package: establish an internal reporting channel, define responsible owners, document incidents, create a review protocol, set response times, and escalate relevant incidents to legal/compliance/IT/security.",
+        "Adopte el proceso de reporte de incidentes incluido en este paquete: establezca un canal interno de reporte, defina responsables, documente los incidentes, cree un protocolo de revisión, establezca tiempos de respuesta y escale los incidentes relevantes a legal/cumplimiento/TI/seguridad.",
+        "请采用本方案包中包含的事件报告流程：建立内部报告渠道，明确负责人，记录事件，制定审查规程，设定响应时限，并将重大事件上报法务/合规/IT/安全部门。",
       ),
-      triggeredBy: ["incidentProcess: none selected"],
+      triggeredBy: noIncidentProcess ? ["incidentProcess: noProcess"] : ["incidentProcess: none selected"],
     });
   }
 
@@ -549,10 +607,11 @@ function buildApprovedTools(
     const name = rec?.toolName || cat?.name || id;
     let status: ApprovedToolRule["status"] = "pending_review";
     if (rec) {
-      if (rec.status === "prohibited") status = "prohibited";
-      else if (rec.status === "approved")
+      // Map the usage-status answer (incl. legacy values) to the list status.
+      if (rec.status === "prohibited" || rec.status === "discarded") status = "prohibited";
+      else if (rec.status === "approved" || rec.status === "in_use" || rec.status === "approved_not_implemented")
         status = rec.securityReviewed === "yes" && rec.termsReviewed === "yes" ? "approved" : "conditionally_approved";
-      else if (rec.status === "tolerated") status = "conditionally_approved";
+      else if (rec.status === "tolerated" || rec.status === "pilot") status = "conditionally_approved";
       else status = "pending_review";
     }
     const isPublic = cat?.publicByDefault && (!rec || rec.plan !== "enterprise");

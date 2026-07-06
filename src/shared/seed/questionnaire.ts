@@ -122,8 +122,37 @@ export const QUESTIONS: AdminQuestion[] = [
       o("health", "Health data", "Datos de salud", "健康数据"),
       o("legal", "Legal advice or privileged material", "Asesoramiento legal o material privilegiado", "法律意见或受特权保护的材料"),
       o("tradeSecrets", "Trade secrets", "Secretos comerciales", "商业秘密"),
-      o("credentials", "Credentials / secrets / API keys", "Credenciales / secretos / claves API", "凭据、密码或 API 密钥"),
+      {
+        value: "credentials",
+        label: {
+          en: "Credentials, passwords, tokens or API keys",
+          es: "Credenciales, contraseñas, tokens o claves API",
+          zh: "凭据、密码、令牌或 API 密钥",
+        },
+        help: {
+          en: "This refers to technical information that allows access to systems, accounts, databases, external services, or digital tools. Examples include passwords, access tokens, API keys, private keys, or internal credentials.",
+          es: "Se refiere a información técnica que permite acceder a sistemas, cuentas, bases de datos, servicios externos o herramientas digitales. Por ejemplo: contraseñas, tokens de acceso, claves API, claves privadas o credenciales internas.",
+          zh: "指可用于访问系统、账户、数据库、外部服务或数字工具的技术信息，例如：密码、访问令牌、API 密钥、私钥或内部凭据。",
+        },
+      },
       o("regulatory", "Sensitive regulatory data", "Datos regulatorios sensibles", "敏感监管数据"),
+      {
+        value: "anonymized",
+        label: {
+          en: "Anonymized or pseudonymized data",
+          es: "Datos anonimizados o seudonimizados",
+          zh: "匿名化或假名化数据",
+        },
+      },
+      {
+        value: "none",
+        exclusive: true,
+        label: {
+          en: "None of the above",
+          es: "Ninguno de los anteriores",
+          zh: "以上皆无",
+        },
+      },
     ],
   },
 
@@ -162,6 +191,11 @@ export const QUESTIONS: AdminQuestion[] = [
   {
     id: "incidentProcess", category: "G", type: "multi", weight: 6,
     prompt: l("For which situations does the company have a reporting process?", "¿Para qué situaciones tiene la empresa un proceso de reporte?", "公司针对哪些情形设有报告流程？"),
+    help: l(
+      "Select the situations where the company has an internal process to report incidents, errors, misuse, data leaks, or problematic outputs related to AI tools.",
+      "Selecciona las situaciones en las que la empresa tiene un proceso interno para reportar incidentes, errores, usos indebidos, filtraciones de datos o resultados problemáticos relacionados con herramientas de IA.",
+      "请选择公司设有内部流程的情形，用于报告与人工智能工具相关的事件、错误、不当使用、数据泄露或问题输出。",
+    ),
     options: [
       o("sensitiveUpload", "Accidental upload of sensitive data", "Subida accidental de datos sensibles", "意外上传敏感数据"),
       o("inaccurate", "Inaccurate AI output", "Resultado de IA inexacto", "人工智能输出不准确"),
@@ -172,6 +206,15 @@ export const QUESTIONS: AdminQuestion[] = [
       o("unauthorizedTool", "Unauthorized AI tool use", "Uso de herramienta de IA no autorizada", "未经授权使用人工智能工具"),
       o("misuse", "Employee misuse", "Mal uso por empleados", "员工不当使用"),
       o("clientComplaint", "Client complaint", "Queja de cliente", "客户投诉"),
+      {
+        value: "noProcess",
+        exclusive: true,
+        label: {
+          en: "We do not currently have an incident reporting process",
+          es: "No contamos actualmente con un proceso de reporte de incidentes",
+          zh: "我们目前没有事件报告流程",
+        },
+      },
     ],
   },
 
