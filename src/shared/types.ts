@@ -340,6 +340,8 @@ export interface ContactLead {
   currentTools: string;
   urgency: "low" | "medium" | "high" | "";
   message: string;
+  /** GDPR privacy-policy acceptance from the contact form. */
+  consent?: boolean;
   uploadedPolicyId?: string;
   sessionId?: string;
   packageId?: string;

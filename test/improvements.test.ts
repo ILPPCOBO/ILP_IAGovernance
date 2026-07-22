@@ -449,7 +449,7 @@ describe("19. the generated package carries every language", () => {
 describe("20. README documents the new options and the draft key", () => {
   it("mentions each new option and the aigpb_draft_v1 storage key", () => {
     const readme = readFileSync(
-      "/Users/williamhuang/ai-governance-policy-builder/README.md",
+      new URL("../README.md", import.meta.url),
       "utf8",
     );
     expect(readme).toContain("None of the above");

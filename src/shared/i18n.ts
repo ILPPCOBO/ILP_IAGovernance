@@ -160,6 +160,9 @@ const en: Dict = {
   "contact.upload": "Upload existing policy",
   "contact.submit": "Send request",
   "contact.sent": "Thank you — we received your request and will be in touch.",
+  "contact.consent":
+    "I have read and accept the processing of my data by ILP Abogados to handle this request, as described in the",
+  "contact.consentLink": "privacy policy",
   "contact.urgency.low": "Low",
   "contact.urgency.medium": "Medium",
   "contact.urgency.high": "High",
@@ -385,6 +388,9 @@ const es: Dict = {
   "contact.upload": "Subir política existente",
   "contact.submit": "Enviar solicitud",
   "contact.sent": "Gracias — hemos recibido su solicitud y nos pondremos en contacto.",
+  "contact.consent":
+    "He leído y acepto el tratamiento de mis datos por ILP Abogados para atender esta solicitud, conforme a la",
+  "contact.consentLink": "política de privacidad",
   "contact.urgency.low": "Baja",
   "contact.urgency.medium": "Media",
   "contact.urgency.high": "Alta",
@@ -610,6 +616,8 @@ const zh: Dict = {
   "contact.upload": "上传现有政策",
   "contact.submit": "发送请求",
   "contact.sent": "谢谢——我们已收到您的请求，会尽快与您联系。",
+  "contact.consent": "本人已阅读并同意 ILP Abogados 为处理本次请求而处理我的个人数据，详见",
+  "contact.consentLink": "隐私政策",
   "contact.urgency.low": "低",
   "contact.urgency.medium": "中",
   "contact.urgency.high": "高",

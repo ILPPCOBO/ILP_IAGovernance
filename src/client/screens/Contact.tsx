@@ -43,6 +43,7 @@ export function Contact(props: Props): React.ReactElement {
     currentTools: toolList,
     urgency: "",
     message: presetMessage,
+    consent: false,
     sessionId: api.sessionId(),
     packageId: props.pkg?.id,
   });
@@ -200,6 +201,37 @@ export function Contact(props: Props): React.ReactElement {
             )}
           </div>
 
+          <div className="field">
+            <label
+              style={{
+                display: "flex",
+                gap: 8,
+                alignItems: "flex-start",
+                fontWeight: "normal",
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={form.consent === true}
+                onChange={(e) => set({ consent: e.target.checked })}
+                style={{ marginTop: 3, flex: "none" }}
+                required
+              />
+              <span>
+                {t("contact.consent")}{" "}
+                <a
+                  href="https://ilpabogados.com/politica-de-privacidad/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("contact.consentLink")}
+                </a>
+                .<span className="req">*</span>
+              </span>
+            </label>
+          </div>
+
           {error && (
             <p className="small" style={{ color: "var(--sev-high)" }}>
               {error}
@@ -209,7 +241,7 @@ export function Contact(props: Props): React.ReactElement {
           <button
             type="submit"
             className="btn btn--primary"
-            disabled={busy || !form.name || !form.email}
+            disabled={busy || !form.name || !form.email || !form.consent}
           >
             {busy && <Spinner />}
             {t("contact.submit")}

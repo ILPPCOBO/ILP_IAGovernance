@@ -340,6 +340,7 @@ export function createApp(): express.Express {
       currentTools: String(b.currentTools ?? ""),
       urgency: (["low", "medium", "high"].includes(b.urgency) ? b.urgency : "") as ContactLead["urgency"],
       message: String(b.message ?? ""),
+      consent: b.consent === true,
       uploadedPolicyId: b.uploadedPolicyId ? String(b.uploadedPolicyId) : undefined,
       sessionId: session.id,
       packageId: b.packageId ? String(b.packageId) : session.packageId,

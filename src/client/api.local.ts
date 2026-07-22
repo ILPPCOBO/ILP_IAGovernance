@@ -370,6 +370,28 @@ export const api = {
     const leads = loadLeads();
     leads.push(lead);
     write(LEADS_KEY, leads);
+    // Also forward the lead to the firm's LeadOS CRM through the deployment's
+    // serverless endpoint (api/lead.js). Fire-and-forget: the visitor's flow
+    // never depends on it and the localStorage copy above is kept regardless.
+    // No-ops when the demo is opened from file:// or a host without the API.
+    try {
+      if (/^https?:$/.test(window.location.protocol)) {
+        const pkg = lead.packageId ? loadPackage(lead.packageId) : null;
+        void fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            ...lead,
+            report: pkg
+              ? { scoreValue: pkg.score.value, scoreBand: pkg.score.band }
+              : null,
+          }),
+        }).catch(() => undefined);
+      }
+    } catch {
+      /* never block the UI on CRM forwarding */
+    }
     return { id: lead.id };
   },
 
